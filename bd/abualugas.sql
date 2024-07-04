@@ -7,6 +7,9 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 SET NAMES utf8mb4;
 
+CREATE DATABASE bd_abualugas;
+USE bd_abualugas;
+
 DROP TABLE IF EXISTS `alugueis`;
 CREATE TABLE `alugueis` (
   `id_aluguel` int(11) NOT NULL AUTO_INCREMENT,
