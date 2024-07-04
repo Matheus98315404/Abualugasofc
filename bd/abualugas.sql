@@ -1,7 +1,7 @@
 CREATE DATABASE bd_abualugas;
 USE bd_abualugas;
 
-CREATE TABLE Clientes (
+CREATE TABLE clientes (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     cpf_cnpj VARCHAR(20) UNIQUE,
@@ -12,7 +12,7 @@ CREATE TABLE Clientes (
     validade_carteira DATE NOT NULL
 );
 
-CREATE TABLE Veiculos (
+CREATE TABLE veiculos (
     id_veiculo INT PRIMARY KEY AUTO_INCREMENT,
     modelo VARCHAR(100),
     marca VARCHAR(100),
@@ -36,15 +36,15 @@ CREATE TABLE Veiculos (
     disponivel BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE Funcionarios (
+CREATE TABLE funcionarios (
     id_funcionario INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100),
     cpf VARCHAR(20) UNIQUE,
     telefone VARCHAR(20),
-    email VARCHAR(100),
+    email VARCHAR(100)
 );
 
-CREATE TABLE Alugueis (
+CREATE TABLE alugueis (
     id_aluguel INT PRIMARY KEY AUTO_INCREMENT,
     id_veiculo INT,
     id_funcionario INT,
@@ -55,28 +55,28 @@ CREATE TABLE Alugueis (
     valor_km DECIMAL(10, 2),
     valor_total DECIMAL(10, 2),
     pagamento VARCHAR(20),
-    FOREIGN KEY (id_veiculo) REFERENCES Veiculos(id_veiculo),
-    FOREIGN KEY (id_funcionario) REFERENCES Funcionarios(id_funcionario)
+    FOREIGN KEY (id_veiculo) REFERENCES veiculos(id_veiculo),
+    FOREIGN KEY (id_funcionario) REFERENCES funcionarios(id_funcionario)
 );
 
-CREATE TABLE ClienteAlugueis (
+CREATE TABLE clientealugueis (
     id_cliente INT,
     id_aluguel INT,
     PRIMARY KEY (id_cliente, id_aluguel),
-    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-    FOREIGN KEY (id_aluguel) REFERENCES Alugueis(id_aluguel)
+    FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente),
+    FOREIGN KEY (id_aluguel) REFERENCES alugueis(id_aluguel)
 );
 
-CREATE TABLE Pagamentos (
+CREATE TABLE pagamentos (
     id_pagamento INT PRIMARY KEY AUTO_INCREMENT,
     id_aluguel INT,
     data_pagamento DATE,
     valor_pagamento DECIMAL(10, 2),
     metodo_pagamento ENUM('Dinheiro', 'Cartao', 'Pix', 'Outro'),
-    FOREIGN KEY (id_aluguel) REFERENCES Alugueis(id_aluguel)
+    FOREIGN KEY (id_aluguel) REFERENCES alugueis(id_aluguel)
 );
 
-INSERT INTO Clientes (nome, cpf_cnpj, endereco, telefone, email, carteira_motorista, validade_carteira)
+INSERT INTO clientes (nome, cpf_cnpj, endereco, telefone, email, carteira_motorista, validade_carteira)
 VALUES 
 ('João Silva', '123.456.789-00', 'Rua A, 123', '1111-1111', 'joao@gmail.com', 'ABC123456', '2025-12-31'),
 ('Maria Oliveira', '987.654.321-00', 'Rua B, 456', '2222-2222', 'maria@gmail.com', 'DEF654321', '2024-06-30'),
@@ -99,7 +99,7 @@ VALUES
 ('Carolina Souza', '666.777.888-00', 'Av. O, 654', '2020-2020', 'carolina@gmail.com', 'BCD123456', '2024-10-10'),
 ('Lucas Pereira', '777.888.999-11', 'Rua P, 987', '2121-2121', 'lucas.pereira@gmail.com', 'EFG234567', '2025-07-15');
 
-INSERT INTO Veiculos (modelo, marca, ano, placa, cor, km_atual, tipo, airbag, num_bancos, num_portas, combustivel, cambio, ar_condicionado, direcao, som, bluetooth, gps, sensor_estacionamento, camera_re, disponivel)
+INSERT INTO veiculos (modelo, marca, ano, placa, cor, km_atual, tipo, airbag, num_bancos, num_portas, combustivel, cambio, ar_condicionado, direcao, som, bluetooth, gps, sensor_estacionamento, camera_re, disponivel)
 VALUES 
 ('Civic', 'Honda', 2020, 'ABC-1234', 'Preto', 50000, 'Carro', TRUE, 5, 4, 'Gasolina', 'Automatico', TRUE, 'Eletrica', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
 ('Corolla', 'Toyota', 2021, 'DEF-5678', 'Branco', 30000, 'Carro', TRUE, 5, 4, 'Flex', 'CVT', TRUE, 'Eletrica', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
@@ -123,7 +123,7 @@ VALUES
 ('Ranger', 'Ford', 2022, 'EFG-6789', 'Branco', 12000, 'Carro', TRUE, 5, 4, 'Diesel', 'Automatico', TRUE, 'Hidraulica', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE),
 ('CB 1000R', 'Honda', 2019, 'HIJ-1234', 'Preto', 22000, 'Moto', FALSE, 1, 0, 'Gasolina', 'Manual', FALSE, 'Mecanica', FALSE, FALSE, FALSE, FALSE, FALSE, TRUE);
 
-INSERT INTO Funcionarios (nome, cpf, telefone, email,)
+INSERT INTO funcionarios (nome, cpf, telefone, email)
 VALUES 
 ('Felipe Matos', '123.456.789-12', '4444-4445', 'felipe2@gmail.com'),
 ('Gustavo Barbosa', '987.654.321-23', '5555-5556', 'gustavo2@gmail.com'),
@@ -138,15 +138,15 @@ VALUES
 ('Roberto Almeida', '444.555.666-77', '4444-4444', 'roberto@gmail.com'),
 ('Amanda Silva', '888.999.111-00', '5555-5555', 'amanda@gmail.com'),
 ('Rodrigo Santos', '222.333.555-88', '6666-6666', 'rodrigo@gmail.com'),
-('Renata Oliveira', '777.888.222-33', '7777-7777', 'renata@gmail.com'),
-('Eduardo Costa', '333.444.666-99', '8888-8888', 'eduardo@gmail.com'),
-('Sandra Lima', '555.666.888-11', '9999-9999', 'sandra@gmail.com'),
+('Renata Oliveira', '777.888.222-33', '7777-7877', 'renata@gmail.com'),
+('Eduardo Costa', '333.444.666-99', '8888-8878', 'eduardo@gmail.com'),
+('Sandra Lima', '555.666.888-11', '9999-9399', 'sandra@gmail.com'),
 ('Rafaela Souza', '111.222.444-66', '1234-5678', 'rafaela@gmail.com'),
 ('Bruno Martins', '999.888.777-22', '2345-6789', 'bruno@gmail.com'),
 ('Isabela Ferreira', '444.555.999-33', '3456-7890', 'isabela@gmail.com'),
 ('Paulo Rodrigues', '888.999.222-44', '4567-8901', 'paulo@gmail.com');
 
-INSERT INTO Alugueis (id_veiculo, id_funcionario, data_inicio, data_fim, km_inicial, km_final, valor_km, valor_total, pagamento)
+INSERT INTO alugueis (id_veiculo, id_funcionario, data_inicio, data_fim, km_inicial, km_final, valor_km, valor_total, pagamento)
 VALUES 
 (1, 1, '2023-01-01', '2023-01-10', 50000, 50500, 2.00, 100.00, TRUE),
 (2, 2, '2023-02-01', '2023-02-05', 30000, 30200, 2.50, 50.00, TRUE),
@@ -169,7 +169,7 @@ VALUES
 (19, 19, '2024-07-01', '2024-07-04', 37000, 37150, 2.65, 39.75, TRUE),
 (20, 20, '2024-08-01', '2024-08-10', 28000, 28200, 2.75, 55.00, TRUE);
 
-INSERT INTO Pagamentos (id_aluguel, data_pagamento, valor_pagamento, metodo_pagamento)
+INSERT INTO pagamentos (id_aluguel, data_pagamento, valor_pagamento, metodo_pagamento)
 VALUES 
 (1, '2023-01-10', 100.00, 'Cartao'),
 (2, '2023-02-05', 50.00, 'Dinheiro'),
