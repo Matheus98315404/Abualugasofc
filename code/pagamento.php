@@ -1,26 +1,26 @@
 <?php
 require_once 'conexao.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
     $id_funcionario = $_POST['id_funcionario'];
     $id_cliente = $_POST['id_cliente'];
     $id_veiculo = $_POST['id_veiculo'];
     $data_aluguel = $_POST['data_aluguel'];
-    $data_devolucao = $_POST['data_devolucao'];
     $km_inicial = $_POST['km_inicial'];
-    $km_final = $_POST['km_final'];
+
     
     // Calcula o valor do aluguel baseado na quilometragem rodada
-    $km_rodado = $km_final - $km_inicial;
-    $valor = $km_rodado * 1; // R$1 por km rodado
+    //$km_rodado = $km_final - $km_inicial;
+    //$valor = $km_rodado * 1; // R$1 por km rodado
 
     // Insere o aluguel no banco de dados
-    $sql = "INSERT INTO alugueis (id_funcionario, id_cliente, id_veiculo, data_aluguel, data_devolucao, valor)
-            VALUES ('$id_funcionario', '$id_cliente', '$id_veiculo', '$data_aluguel', '$data_devolucao', '$valor')";
+    $sql = "INSERT INTO alugueis (id_funcionario, id_cliente, id_veiculo, data_aluguel)
+            VALUES ('$id_funcionario', '$id_cliente', '$id_veiculo', '$data_aluguel', )";
     
     if (mysqli_query($conexao, $sql)) {
         // Atualiza a quilometragem do veículo e a disponibilidade
-        mysqli_query($conexao, "UPDATE veiculos SET km_atual = '$km_final', disponivel = 0 WHERE id_veiculo = '$id_veiculo'");
+        $sql_update = "UPDATE veiculos SET km_atual = '$km_inicial', disponivel = 0 WHERE id_veiculo = '$id_veiculo'";
+        if (mysqli_query($conexao, $sql_update)) {
         
         echo "Aluguel realizado com sucesso!";
     } else {

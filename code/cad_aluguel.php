@@ -8,7 +8,7 @@ $result_funcionarios = mysqli_query($conexao, "SELECT id_funcionario, nome FROM 
 $result_clientes = mysqli_query($conexao, "SELECT id_cliente, nome FROM clientes");
 
 // Busca os veículos disponíveis
-$result_veiculos = mysqli_query($conexao, "SELECT id_veiculo, modelo FROM veiculos WHERE disponivel = 1");
+$result_veiculos = mysqli_query($conexao, "SELECT id_veiculo, placa FROM veiculos WHERE disponivel = 1");
 ?>
 
 <!DOCTYPE html>
@@ -35,26 +35,22 @@ $result_veiculos = mysqli_query($conexao, "SELECT id_veiculo, modelo FROM veicul
             <?php } ?>
         </select><br><br>
         
-        <label for="veiculo">Veículo:</label>
+        <label for="veiculo">Placa do veiculo:</label>
         <select id="veiculo" name="id_veiculo" required>
             <?php while ($row = mysqli_fetch_assoc($result_veiculos)) { ?>
-                <option value="<?php echo $row['id_veiculo']; ?>"><?php echo $row['modelo']; ?></option>
+                <option value="<?php echo $row['id_veiculo']; ?>"><?php echo $row['placa']; ?></option>
             <?php } ?>
         </select><br><br>
         
         <label for="data_aluguel">Data de Aluguel:</label>
         <input type="date" id="data_aluguel" name="data_aluguel" required><br><br>
-        
-        <label for="data_devolucao">Data de Devolução:</label>
-        <input type="date" id="data_devolucao" name="data_devolucao" required><br><br>
-        
+                
         <label for="km_inicial">Quilometragem Inicial:</label>
         <input type="number" id="km_inicial" name="km_inicial" required><br><br>
         
-        <label for="km_final">Quilometragem Final:</label>
-        <input type="number" id="km_final" name="km_final" required><br><br>
+       
         
-        <button type="submit">Continuar para Pagamento</button>
+        <button type="submit">confirmar Aluguel</button>
     </form>
 </body>
 </html>
