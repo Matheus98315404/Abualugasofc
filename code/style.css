@@ -1,6 +1,3 @@
-/* styles.css */
-
-/* Estilos gerais para o corpo da página */
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
@@ -9,12 +6,10 @@ body {
     background-color: #f2f2f2;
 }
 
-/* Estilos para os títulos */
 h1, h2, h3 {
     color: #333;
 }
 
-/* Estilos para os formulários */
 form {
     background-color: #fff;
     padding: 20px;
@@ -22,7 +17,6 @@ form {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Estilos para os inputs e labels */
 label {
     display: block;
     margin-bottom: 10px;
@@ -43,7 +37,6 @@ select {
     box-sizing: border-box;
 }
 
-/* Estilos para botões */
 button,
 input[type="submit"] {
     background-color: #4CAF50;
@@ -59,7 +52,6 @@ input[type="submit"]:hover {
     background-color: #45a049;
 }
 
-/* Estilos para links */
 a {
     color: #1e90ff;
     text-decoration: none;
