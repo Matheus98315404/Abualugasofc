@@ -1,5 +1,8 @@
 -- Adminer 4.8.1 MySQL 5.5.5-10.5.25-MariaDB-ubu2004 dump
 
+CREATE DATABASE bd_abualugas;
+USE bd_abualugas;
+
 SET NAMES utf8;
 SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
