@@ -1,6 +1,6 @@
 <?php
 
-function listarAlunos($conexao)
+function listarCarros($conexao)
 {
     $sql = "SELECT * FROM tb_aluno";
 
