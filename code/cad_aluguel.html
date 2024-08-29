@@ -8,83 +8,19 @@
 </head>
 <body>
     <h2>Realizar Aluguel</h2>
-    <form action="pagamento.php" method="POST">
+    <form action="cad_aluguel.php" method="POST">
         <label for="funcionario">Funcionário:</label>
         <select id="funcionario" name="id_funcionario" required>
-           
-            <option value="1">Felipe Matos</option>
-            <option value="2">Gustavo Barbosa</option>
-            <option value="3">Wellison Ferreira</option>
-            <option value="4">Joana Silva</option>
-            <option value="5">Pedro Santos</option>
-            <option value="6">Ana Souza</option>
-            <option value="7">Marcos Oliveira</option>
-            <option value="8">Carla Mendes</option>
-            <option value="9">Lucas Fernandes</option>
-            <option value="10">Camila Costa</option>
-            <option value="11">Roberto Almeida</option>
-            <option value="12">Amanda Silva</option>
-            <option value="13">Rodrigo Santos</option>
-            <option value="14">Renata Oliveira</option>
-            <option value="15">Eduardo Costa</option>
-            <option value="16">Sandra Lima</option>
-            <option value="17">Rafaela Souza</option>
-            <option value="18">Bruno Martins</option>
-            <option value="19">Isabela Ferreira</option>
-            <option value="20">Paulo Rodrigues</option>
         </select><br><br>
-        
+
         <label for="cliente">Cliente:</label>
         <select id="cliente" name="id_cliente" required>
-           
-            <option value="1">João Silva</option>
-            <option value="2">Maria Oliveira</option>
-            <option value="3">Pedro Santos</option>
-            <option value="4">Ana Souza</option>
-            <option value="5">Carlos Ferreira</option>
-            <option value="6">Mariana Costa</option>
-            <option value="7">Rafaela Lima</option>
-            <option value="8">Rodrigo Vieira</option>
-            <option value="9">Camila Santos</option>
-            <option value="10">Fernanda Oliveira</option>
-            <option value="11">Gustavo Ferreira</option>
-            <option value="12">Lucas Souza</option>
-            <option value="13">Patrícia Lima</option>
-            <option value="14">Renato Costa</option>
-            <option value="15">Sandra Vieira</option>
-            <option value="16">Thiago Santos</option>
-            <option value="17">Vanessa Oliveira</option>
-            <option value="18">Roberto Silva</option>
-            <option value="19">Carolina Souza</option>
-            <option value="20">Lucas Pereira</option>
-        
+        </select><br><br>
+
         <label for="veiculo">Placa do Veículo:</label>
         <select id="veiculo" name="id_veiculo" required>
-        
-            <option value="ABC-1234"></option>
-            <option value="DEF-5678"></option>
-            <option value="GHI-9101"></option>
-            <option value="JKL-2345"></option>
-            <option value="MNO-6789"></option>
-            <option value="PQR-1234"></option>
-            <option value="STU-5678"></option>
-            <option value="VWX-9101"></option>
-            <option value="YZA-2345"></option>
-            <option value="BCD-6789"></option>
-            <option value="EFG-1234"></option>
-            <option value="HIJ-5678"></option>
-            <option value="KLM-9101"></option>
-            <option value="NOP-2345"></option>
-            <option value="QRS-6789"></option>
-            <option value="TUV-1234"></option>
-            <option value="WXY-5678"></option>
-            <option value="YZA-9101"></option>
-            <option value="BCD-2345"></option>
-            <option value="EFG-6789"></option>
-            <option value="HIJ-1234"></option>
-            <option value="KLL-5407"></option>
         </select><br><br>
-        
+
         <label for="data_aluguel">Data de Aluguel:</label>
         <input type="date" id="data_aluguel" name="data_aluguel" required><br><br>
                 
