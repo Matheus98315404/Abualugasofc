@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+</head>
+<body>
+    <h2>Realizar Pagamento</h2>
+    <form action="processar_pagamento.php" method="POST">
+        <label for="id_cliente">ID Cliente:</label>
+        <input type="text" id="id_cliente" name="id_cliente" required><br><br>
+
+        <label for="id_veiculo">ID Veículo:</label>
+        <input type="text" id="id_veiculo" name="id_veiculo" required><br><br>
+
+        <label for="data_aluguel">Data do Aluguel:</label>
+        <input type="date" id="data_aluguel" name="data_aluguel" required><br><br>
+
+        <label for="km_inicial">Quilometragem Inicial:</label>
+        <input type="number" id="km_inicial" name="km_inicial" required><br><br>
+
+        <input type="submit" value="Pagar">
+    </form>
+</body>
+</html>
