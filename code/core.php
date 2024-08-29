@@ -49,21 +49,21 @@ function listarCarros($conexao)
 //   return $lista;
 //}
 
-//function buscarNomeSituacaoPorId($conexao, $id_veiculo)
-//{
-//     $sql = "SELECT id_veiculo FROM veiculos WHERE id_veiculo = ?";
+function buscarNomeSituacaoPorId($conexao, $id_veiculo)
+{
+     $sql = "SELECT id_veiculo FROM veiculos WHERE id_veiculo = ?";
 
-//     $stmt = mysqli_prepare($conexao, $sql);
+    $stmt = mysqli_prepare($conexao, $sql);
 
-//     mysqli_stmt_bind_param($stmt, "i", $id_veiculo);
+   mysqli_stmt_bind_param($stmt, "i", $id_veiculo);
 
-//     mysqli_stmt_execute($stmt);
+   mysqli_stmt_execute($stmt);
 
-//     mysqli_stmt_bind_result($stmt, $modelo);
+    mysqli_stmt_bind_result($stmt, $modelo);
 
-//     if (mysqli_stmt_fetch($stmt)) {
-//         return $modelo;
-//     }
+    if (mysqli_stmt_fetch($stmt)) {
+        return $modelo;
+     }
 
-//     mysqli_stmt_close($stmt);
-// }
+     mysqli_stmt_close($stmt);
+     }
