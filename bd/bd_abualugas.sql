@@ -221,3 +221,4 @@ INSERT INTO `veiculos` (`id_veiculo`, `modelo`, `marca`, `ano`, `placa`, `cor`, 
 (18, 'CBR 1000RR', 'Honda', 2023, 'CBR1R23', 'Vermelho', 1500, 'Moto', 2, 2, 0, 'Gasolina', 'Manual', 0, 'Mecanica', 0, 0, 0, 0, 0, 1),
 (19, 'Fusca', 'Volkswagen', 1985, 'FUS5C56', 'Amarelo', 150000, 'Carro', 1, 2, 2, 'Gasolina', 'Manual', 0, 'Mecanica', 0, 0, 0, 0, 0, 1),
 (20, 'Ninja ZX-6R', 'Kawasaki', 2021, 'NIN6Z21', 'Azul', 8000, 'Moto', 2, 2, 0, 'Gasolina', 'Manual', 0, 'Mecanica', 0, 0, 0, 0, 0, 1);
+
