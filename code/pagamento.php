@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h2>Realizar Pagamento</h2>
@@ -25,7 +26,9 @@
             <option value="Outro">Outro</option>
         </select><br><br>
 
-        <input type="submit" name="submit" value="Pagar">
+        <input type="submit" name="submit" value="Pagar"> <br><br>
+        <a href="index.html">Clique aqui para voltar ao início!</a>
+
     </form>
 
     <?php
