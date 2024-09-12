@@ -24,29 +24,37 @@
                     <th>Cor</th>
                     <th>Km atual</th>
                     <th>Tipo</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                require_once "conexao.php";
-                require_once "core.php";
+            <tbody>
+    <?php
+    require_once "conexao.php";
+    require_once "core.php";
 
-                $resultados = listarCarros($conexao);
+    $resultados = listarCarros($conexao);
 
-                foreach ($resultados as $modelo) {
-                    echo "<tr>";
-                    echo "<td>$modelo[0]</td>";
-                    echo "<td>$modelo[1]</td>";
-                    echo "<td>$modelo[2]</td>";
-                    echo "<td>$modelo[3]</td>";
-                    echo "<td>$modelo[4]</td>";
-                    echo "<td>$modelo[5]</td>";
-                    echo "<td>$modelo[6]</td>";
-                    echo "<td>$modelo[7]</td>";
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
+    foreach ($resultados as $modelo) {
+        $id_veiculo = $modelo[0];
+        echo "<tr>";
+        echo "<td>$id_veiculo</td>";
+        echo "<td>$modelo[1]</td>";
+        echo "<td>$modelo[2]</td>";
+        echo "<td>$modelo[3]</td>";
+        echo "<td>$modelo[4]</td>";
+        echo "<td>$modelo[5]</td>";
+        echo "<td>$modelo[6]</td>";
+        echo "<td>$modelo[7]</td>";
+        echo "<td>
+                <a href='editar.php?id=$id_veiculo' class='btn btn-warning btn-sm'>Editar</a>
+                <a href='excluir.php?id=$id_veiculo' class='btn btn-danger btn-sm'>Excluir</a>
+              </td>";
+        echo "</tr>";
+    }
+    ?>
+</tbody>
+
         </table>
 
         <div class="text-center mt-4">
