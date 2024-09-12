@@ -36,6 +36,8 @@ $result_veiculos = executeQuery($conexao, $query_veiculos);
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Realizar Aluguel</title>
+<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
     <h2>Realizar Aluguel</h2>
@@ -85,7 +87,8 @@ $result_veiculos = executeQuery($conexao, $query_veiculos);
         <label for="km_inicial">Quilometragem Inicial:</label>
         <input type="number" id="km_inicial" name="km_inicial" required><br><br>
         
-        <button type="submit">Confirmar Aluguel</button>
+        <button type="submit">Confirmar Aluguel</button><br><Br>
+        <a href="listagem_pag.php"> Lista de veículos </a>
     </form>
 </body>
 </html>

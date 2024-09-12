@@ -41,7 +41,7 @@
         $metodo_pagamento = $_POST['metodo_pagamento'];
 
         // Puxar o nome do cliente
-        $nome_cliente = buscarNomeSituacaoPorId($id_cliente);
+        $nome_cliente = buscarNomeSituacaoPorId($ 1);
     
         // Conexão ao banco de dados
         $conn = mysqli_connect("localhost", "usuario", "senha", "nome_do_banco");
