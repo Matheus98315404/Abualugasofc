@@ -32,23 +32,29 @@
     </form>
 
     <?php
+
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        require_once 'core.php'; // Importa a função buscarNomeSituacaoPorId
+    require_once 'core.php'; // Importa a função buscarNomeSituacaoPorId
 
-        $id_cliente = $_POST['id_cliente'];
-        $id_aluguel = $_POST['id_aluguel'];
-        $km_final = $_POST['km_final'];
-        $metodo_pagamento = $_POST['metodo_pagamento'];
+    // Verificação para evitar erros de chaves indefinidas
+    $id_cliente = isset($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
+    $id_aluguel = isset($_POST['id_aluguel']) ? $_POST['id_aluguel'] : null;
+    $km_final = isset($_POST['km_final']) ? $_POST['km_final'] : null;
+    $metodo_pagamento = isset($_POST['metodo_pagamento']) ? $_POST['metodo_pagamento'] : null;
 
-        // Puxar o nome do cliente
-        $nome_cliente = buscarNomeSituacaoPorId($ 1);
-    
+    // Validação adicional para garantir que os dados foram fornecidos
+    if ($id_cliente && $id_aluguel && $km_final && $metodo_pagamento) {
+        // Corrigir a chamada da função para passar os dois parâmetros necessários
+        // Aqui, substitua $id_situacao pelo valor correto esperado como segundo argumento
+        $id_situacao = 1; // Exemplo de valor que pode ser usado
+        $nome_cliente = buscarNomeSituacaoPorId($id_cliente, $id_situacao); 
+
         // Conexão ao banco de dados
         $conn = mysqli_connect("localhost", "usuario", "senha", "nome_do_banco");
 
-        // Verifica a conexão
-    }
-        if (mysqli_connect_error() === "") {
+        if (!$conn) {
+            echo "<p>Falha na conexão com o banco de dados: " . mysqli_connect_error() . "</p>";
+        } else {
             // Recupera os dados do aluguel
             $stmt = mysqli_prepare($conn, "SELECT km_inicial, valor_km FROM alugueis WHERE id_aluguel = ? AND id_cliente = ?");
             mysqli_stmt_bind_param($stmt, "ii", $id_aluguel, $id_cliente);
@@ -83,10 +89,12 @@
 
             mysqli_stmt_close($stmt);
             mysqli_close($conn);
-        } else {
-            echo "<p>Falha na conexão com o banco de dados: " . mysqli_connect_error() . "</p>";
         }
-    
-    ?>
+    } else {
+        echo "<p>Por favor, preencha todos os campos.</p>";
+    }
+}
+?>
+
 </body>
 </html>

@@ -25,7 +25,7 @@ $result_funcionarios = executeQuery($conexao, $query_funcionarios);
 
 $query_clientes = "SELECT id_cliente, nome FROM clientes";
 $result_clientes = executeQuery($conexao, $query_clientes);
-
+    
 $query_veiculos = "SELECT id_veiculo, placa FROM veiculos WHERE disponivel = 1";
 $result_veiculos = executeQuery($conexao, $query_veiculos);
 ?>
@@ -83,9 +83,6 @@ $result_veiculos = executeQuery($conexao, $query_veiculos);
         
         <label for="data_aluguel">Data de Aluguel:</label>
         <input type="date" id="data_aluguel" name="data_aluguel" required><br><br>
-        
-        <label for="km_inicial">Quilometragem Inicial:</label>
-        <input type="number" id="km_inicial" name="km_inicial" required><br><br>
         
         <button type="submit">Confirmar Aluguel</button><br><Br>
         <a href="listagem_pag.php"> Lista de veículos </a>

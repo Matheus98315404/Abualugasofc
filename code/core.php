@@ -100,25 +100,32 @@ function listarFuncionarios($conexao)
 //   return $lista;
 //}
 
-function buscarNomeSituacaoPorId($conexao, $id_veiculo)
-{
-     $sql = "SELECT id_veiculo FROM veiculos WHERE id_veiculo = ?";
+function buscarNomeSituacaoPorId($conexao, $id_veiculo) {
+    // Verifica se a conexão é válida
+    if (!$conexao) {
+        die("Falha na conexão com o banco de dados: " . mysqli_connect_error());
+    }
 
-    $stmt = mysqli_prepare($conexao, $sql);
+    // Prepara a consulta SQL
+    $sql = "SELECT modelo FROM veiculos WHERE id_veiculo = ?";
+    if ($stmt = mysqli_prepare($conexao, $sql)) {
+        // Liga os parâmetros e executa a consulta
+        mysqli_stmt_bind_param($stmt, "i", $id_veiculo);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $modelo);
 
-   mysqli_stmt_bind_param($stmt, "i", $id_veiculo);
-
-   mysqli_stmt_execute($stmt);
-
-    mysqli_stmt_bind_result($stmt, $modelo);
-
-    if (mysqli_stmt_fetch($stmt)) {
-        return $modelo;
-     }
-
-     mysqli_stmt_close($stmt);
-     }
-
+        // Verifica se obteve resultado
+        if (mysqli_stmt_fetch($stmt)) {
+            mysqli_stmt_close($stmt);
+            return $modelo;  // Retorna o modelo do veículo
+        } else {
+            mysqli_stmt_close($stmt);
+            return "Veículo não encontrado.";  // Retorno caso o veículo não seja encontrado
+        }
+    } else {
+        return "Erro ao preparar a consulta SQL: " . mysqli_error($conexao);
+    }
+}
 
 
 
