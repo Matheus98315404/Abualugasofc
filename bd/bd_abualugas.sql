@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis` (
   `id_funcionario` INT NOT NULL,
   `data_inicio` DATE NULL DEFAULT NULL,
   `data_fim` DATE NULL DEFAULT NULL,
+  `id_veiculo` INT NOT NULL,
   `id_cliente` INT NOT NULL,
   PRIMARY KEY (`id_aluguel`),
   INDEX `id_funcionario` (`id_funcionario` ASC) VISIBLE,
