@@ -8,7 +8,7 @@
 </head>
 <body>
     <h2>Detalhes do Aluguel</h2>
-    <form action="processamento_aluguel.php" method="POST">
+    <form action="processamentoaluguel.php" method="POST">
         <input type="hidden" name="id_funcionario" value="<?php echo $_POST['id_funcionario']; ?>">
         <input type="hidden" name="id_cliente" value="<?php echo $_POST['id_cliente']; ?>">
         <input type="hidden" name="veiculos" value="<?php echo implode(',', $_POST['veiculos']); ?>">
