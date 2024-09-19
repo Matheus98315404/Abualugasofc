@@ -4,23 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-heading {
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #357abd;
+        }
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
 <body>
-    <h2>Realizar Pagamento</h2>
-    <form action="processar_pagamento.php" method="POST">
-        <label for="id_cliente">ID Cliente:</label>
-        <input type="text" id="id_cliente" name="id_cliente" required><br><br>
 
-        <label for="id_veiculo">ID Veículo:</label>
-        <input type="text" id="id_veiculo" name="id_veiculo" required><br><br>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="form-container">
+            <h2 class="form-heading text-center">Realizar Pagamento</h2>
+            <form action="processar_pagamento.php" method="POST">
+                <div class="mb-3">
+                    <label for="id_cliente" class="form-label">ID Cliente:</label>
+                    <input type="text" id="id_cliente" name="id_cliente" class="form-control" required>
+                </div>
 
-        <label for="data_aluguel">Data do Aluguel:</label>
-        <input type="date" id="data_aluguel" name="data_aluguel" required><br><br>
+                <div class="mb-3">
+                    <label for="id_veiculo" class="form-label">ID Veículo:</label>
+                    <input type="text" id="id_veiculo" name="id_veiculo" class="form-control" required>
+                </div>
 
-        <label for="km_inicial">Quilometragem Inicial:</label>
-        <input type="number" id="km_inicial" name="km_inicial" required><br><br>
+                <div class="mb-3">
+                    <label for="data_aluguel" class="form-label">Data do Aluguel:</label>
+                    <input type="date" id="data_aluguel" name="data_aluguel" class="form-control" required>
+                </div>
 
-        <input type="submit" value="Pagar">
-    </form>
+                <div class="mb-3">
+                    <label for="km_inicial" class="form-label">Quilometragem Inicial:</label>
+                    <input type="number" id="km_inicial" name="km_inicial" class="form-control" required>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-custom">Pagar</button>
+                    <a href="index.html" class="btn btn-back ms-2">Voltar ao Início</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -38,7 +38,7 @@
     foreach ($resultados as $modelo) {
         $id_veiculo = $modelo[0];
         echo "<tr>";
-        echo "<td>$id_veiculo</td>";
+        echo "<td>$id_veiculo</td>";    
         echo "<td>$modelo[1]</td>";
         echo "<td>$modelo[2]</td>";
         echo "<td>$modelo[3]</td>";

@@ -1,106 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Cadastro de veículo</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html>
-<head>
     <title>Cadastro de Veículo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f5f7fa;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-heading {
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #357abd;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .btn-group-custom {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Cadastro de Veículo</h2>
-    <form action="cad_veiculos.php" method="post">
-        <label for="modelo">Modelo:</label>
-        <input type="text" id="modelo" name="modelo" required><br><br>
-        
-        <label for="marca">Marca:</label>
-        <input type="text" id="marca" name="marca" required><br><br>
-        
-        <label for="ano">Ano:</label>
-        <input type="number" id="ano" name="ano" required><br><br>
-        
-        <label for="placa">Placa:</label>
-        <input type="text" id="placa" name="placa" required><br><br>
-        
-        <label for="cor">Cor:</label>
-        <input type="text" id="cor" name="cor" required><br><br>
-        
-        <label for="km_atual">Km Atual:</label>
-        <input type="number" id="km_atual" name="km_atual" required><br><br>
-        
-        <label for="tipo">Tipo:</label>
-        <select id="tipo" name="tipo" required>
-            <option value="Carro">Carro</option>
-            <option value="Moto">Moto</option>
-        </select><br><br>
-        
-        <label for="airbag">Airbag:</label>
-        <input type="checkbox" id="airbag" name="airbag"><br><br>
-        
-        <label for="num_bancos">Número de Bancos:</label>
-        <input type="number" id="num_bancos" name="num_bancos" required><br><br>
-        
-        <label for="num_portas">Número de Portas:</label>
-        <input type="number" id="num_portas" name="num_portas" required><br><br>
-        
-        <label for="combustivel">Combustível:</label>
-        <select id="combustivel" name="combustivel" required>
-            <option value="Gasolina">Gasolina</option>
-            <option value="Etanol">Etanol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Flex">Flex</option>
-            <option value="Eletrico">Elétrico</option>
-            <option value="Hibrido">Híbrido</option>
-        </select><br><br>
-        
-        <label for="cambio">Câmbio:</label>
-        <select id="cambio" name="cambio" required>
-            <option value="Manual">Manual</option>
-            <option value="Automatico">Automático</option>
-            <option value="CVT">CVT</option>
-            <option value="DCT">DCT</option>
-        </select><br><br>
-        
-        <label for="ar_condicionado">Ar Condicionado:</label>
-        <input type="checkbox" id="ar_condicionado" name="ar_condicionado"><br><br>
-        
-        <label for="direcao">Direção:</label>
-        <select id="direcao" name="direcao" required>
-            <option value="Mecanica">Mecânica</option>
-            <option value="Hidraulica">Hidráulica</option>
-            <option value="Eletrica">Elétrica</option>
-        </select><br><br>
-        
-        <label for="som">Som:</label>
-        <input type="checkbox" id="som" name="som"><br><br>
-        
-        <label for="bluetooth">Bluetooth:</label>
-        <input type="checkbox" id="bluetooth" name="bluetooth"><br><br>
-        
-        <label for="gps">GPS:</label>
-        <input type="checkbox" id="gps" name="gps"><br><br>
-        
-        <label for="sensor_estacionamento">Sensor de Estacionamento:</label>
-        <input type="checkbox" id="sensor_estacionamento" name="sensor_estacionamento"><br><br>
-        
-        <label for="camera_re">Câmera de Ré:</label>
-        <input type="checkbox" id="camera_re" name="camera_re"><br><br>
-        
-        <label for="disponivel">Disponível:</label>
-        <input type="checkbox" id="disponivel" name="disponivel" checked><br><br>
-        
-        <input type="submit" value="Cadastrar Veículo"><br><br>
 
-        <a href="index.html">Clique aqui para voltar ao início!</a>
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="form-container col-lg-8 col-md-10 col-sm-12">
+            <h2 class="form-heading text-center">Cadastro de Veículo</h2>
+            <form action="cad_veiculos.php" method="post">
+                <div class="mb-3">
+                    <label for="modelo" class="form-label">Modelo:</label>
+                    <input type="text" id="modelo" name="modelo" class="form-control" required>
+                </div>
 
-    </form>
-</body>
-</html>
+                <div class="mb-3">
+                    <label for="marca" class="form-label">Marca:</label>
+                    <input type="text" id="marca" name="marca" class="form-control" required>
+                </div>
 
+                <div class="mb-3">
+                    <label for="ano" class="form-label">Ano:</label>
+                    <input type="number" id="ano" name="ano" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="placa" class="form-label">Placa:</label>
+                    <input type="text" id="placa" name="placa" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cor" class="form-label">Cor:</label>
+                    <input type="text" id="cor" name="cor" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="km_atual" class="form-label">Km Atual:</label>
+                    <input type="number" id="km_atual" name="km_atual" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo:</label>
+                    <select id="tipo" name="tipo" class="form-select" required>
+                        <option value="Carro">Carro</option>
+                        <option value="Moto">Moto</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="airbag" class="form-check-label">Airbag:</label>
+                    <input type="checkbox" id="airbag" name="airbag" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="num_bancos" class="form-label">Número de Bancos:</label>
+                    <input type="number" id="num_bancos" name="num_bancos" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="num_portas" class="form-label">Número de Portas:</label>
+                    <input type="number" id="num_portas" name="num_portas" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="combustivel" class="form-label">Combustível:</label>
+                    <select id="combustivel" name="combustivel" class="form-select" required>
+                        <option value="Gasolina">Gasolina</option>
+                        <option value="Etanol">Etanol</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Flex">Flex</option>
+                        <option value="Eletrico">Elétrico</option>
+                        <option value="Hibrido">Híbrido</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cambio" class="form-label">Câmbio:</label>
+                    <select id="cambio" name="cambio" class="form-select" required>
+                        <option value="Manual">Manual</option>
+                        <option value="Automatico">Automático</option>
+                        <option value="CVT">CVT</option>
+                        <option value="DCT">DCT</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ar_condicionado" class="form-check-label">Ar Condicionado:</label>
+                    <input type="checkbox" id="ar_condicionado" name="ar_condicionado" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="direcao" class="form-label">Direção:</label>
+                    <select id="direcao" name="direcao" class="form-select" required>
+                        <option value="Mecanica">Mecânica</option>
+                        <option value="Hidraulica">Hidráulica</option>
+                        <option value="Eletrica">Elétrica</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="som" class="form-check-label">Som:</label>
+                    <input type="checkbox" id="som" name="som" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="bluetooth" class="form-check-label">Bluetooth:</label>
+                    <input type="checkbox" id="bluetooth" name="bluetooth" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="gps" class="form-check-label">GPS:</label>
+                    <input type="checkbox" id="gps" name="gps" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="sensor_estacionamento" class="form-check-label">Sensor de Estacionamento:</label>
+                    <input type="checkbox" id="sensor_estacionamento" name="sensor_estacionamento" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="camera_re" class="form-check-label">Câmera de Ré:</label>
+                    <input type="checkbox" id="camera_re" name="camera_re" class="form-check-input">
+                </div>
+
+                <div class="mb-3">
+                    <label for="disponivel" class="form-check-label">Disponível:</label>
+                    <input type="checkbox" id="disponivel" name="disponivel" class="form-check-input" checked>
+                </div>
+
+                <div class="btn-group-custom text-center">
+                    <button type="submit" class="btn btn-custom">Cadastrar Veículo</button>
+                    <a href="index.html" class="btn btn-secondary">Voltar ao Início</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
