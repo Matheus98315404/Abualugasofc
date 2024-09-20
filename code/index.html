@@ -1,21 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Abualugas</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
+        .navbar-nav .nav-link:hover {
+            background-color: #495057;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: white;
+        }
+        .slogan {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            width: 18rem;
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
-    <h1>Seja bem vindo ao Abualugas!</h1>
-    <h3>Sua locadora de veículos</h3><br><br>
-    <a href="cad_veiculos.html">Cadastro de veículos</a><br>
-    <a href="cadastro_cliente.html">Cadastro de cliente</a><br>
-    <a href="cad_func.html">Cadastro de funcionarios</a><br>
-    <a href="cad_aluguel.php">Aluguel de veículos</a><br>
-    <a href="pagamento.php">Devolução e o pagamento do veículo</a><br>
-    <a href="listar_carros.php"> Lista de veículos </a><br>
-    <a href="listar_funcionarios.php">Lista de funcionários</a><br>
-    <a href="listar_clientes.php">Lista de clientes</a>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Abualugas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="cad_veiculos.html">Veículos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cadastro_cliente.html">Clientes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cad_aluguel.php">Aluguel</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+      <div class="container text-center">
+        <div class="slogan">
+            <h1>Seja bem-vindo ao Abualugas!</h1>
+            <h3>Sua locadora de veículos</h3>
+        </div>
+<br>
+        <div class="card-container">
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Cadastro de Veículos">
+                <div class="card-body">
+                    <h5 class="card-title">Cadastro de Veículos</h5>
+                    <a href="cad_veiculos.html" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Cadastro de Clientes">
+                <div class="card-body">
+                    <h5 class="card-title">Cadastro de Clientes</h5>
+                    <a href="cadastro_cliente.html" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Cadastro de Funcionários">
+                <div class="card-body">
+                    <h5 class="card-title">Cadastro de Funcionários</h5>
+                    <a href="cad_func.html" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Aluguel de Veículos">
+                <div class="card-body">
+                    <h5 class="card-title">Aluguel de Veículos</h5>
+                    <a href="cad_aluguel.php" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Devolução e Pagamento">
+                <div class="card-body">
+                    <h5 class="card-title">Devolução e Pagamento</h5>
+                    <a href="pagamento.php" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Lista de Veículos">
+                <div class="card-body">
+                    <h5 class="card-title">Lista de Veículos</h5>
+                    <a href="listar_carros.php" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Lista de Funcionários">
+                <div class="card-body">
+                    <h5 class="card-title">Lista de Funcionários</h5>
+                    <a href="listar_funcionarios.php" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://via.placeholder.com/286x200" class="card-img-top" alt="Lista de Clientes">
+                <div class="card-body">
+                    <h5 class="card-title">Lista de Clientes</h5>
+                    <a href="listar_clientes.php" class="btn btn-primary">Acessar</a>
+                </div>
+            </div>
+        </div>
+
+        <br> <!-- Adicionado espaço entre o slogan e o footer -->
+
+    </div>
+
+    <footer class="footer text-center">
+        <p>© 2024 Abualugas - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
