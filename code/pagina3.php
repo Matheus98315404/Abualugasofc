@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes do Aluguel</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<style> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style> 
         body {
             background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .form-container {
             background-color: #ffffff;
@@ -37,27 +39,6 @@
         .btn-back:hover {
             background-color: #5a6268;
         }
-
-        body {
-            background-color: #f5f7fa;
-        }
-        .form-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-heading {
-            margin-bottom: 20px;
-        }
-        .btn-custom {
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-        }
-        .btn-custom:hover {
-            background-color: #357abd;
-        }
         .back-link {
             display: block;
             margin-top: 20px;
@@ -71,50 +52,26 @@
             margin-top: 20px;
             text-align: center;
         }
-
-            body {
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            .navbar {
-                background-color: #343a40;
-            }
-            .navbar-brand {
-                font-weight: bold;
-                font-size: 1.5rem;
-            }
-            .navbar-nav .nav-link {
-                color: #ffffff !important;
-            }
-            .navbar-nav .nav-link:hover {
-                background-color: #495057;
-                border-radius: 5px;
-            }
-            .footer {
-                margin-top: auto;
-                padding: 20px 0;
-                background-color: #343a40;
-                color: white;
-            }
-            .slogan {
-                text-align: center;
-                margin: 20px 0;
-            }
-            .card-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-                margin: 20px 0;
-            }
-            .card {
-                width: 18rem;
-            }
-            .card-img-top {
-                height: 200px;
-                object-fit: cover;
-            }
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+        }
+        .navbar-nav .nav-link:hover {
+            background-color: #495057;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -126,32 +83,44 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <!-- Adicione itens de navegação aqui -->
                 </ul>
             </div>
         </div>
     </nav>
-    </style>
+    
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="form-container">
+            <h2 class="form-heading text-center">Detalhes do Aluguel</h2>
+            <form action="processamentoaluguel.php" method="POST">
+                <input type="hidden" name="id_funcionario" value="<?php echo $_POST['id_funcionario']; ?>">
+                <input type="hidden" name="id_cliente" value="<?php echo $_POST['id_cliente']; ?>">
+                <input type="hidden" name="veiculos" value="<?php echo implode(',', $_POST['veiculos']); ?>">
 
-<body>
-    <h2>Detalhes do Aluguel</h2>
-    <form action="processamentoaluguel.php" method="POST">
-        <input type="hidden" name="id_funcionario" value="<?php echo $_POST['id_funcionario']; ?>">
-        <input type="hidden" name="id_cliente" value="<?php echo $_POST['id_cliente']; ?>">
-        <input type="hidden" name="veiculos" value="<?php echo implode(',', $_POST['veiculos']); ?>">
+                <div class="mb-3">
+                    <label for="data_inicio" class="form-label">Data de Início:</label>
+                    <input type="date" id="data_inicio" name="data_inicio" class="form-control" required>
+                </div>
 
-        <label for="data_inicio">Data de Início:</label>
-        <input type="date" id="data_inicio" name="data_inicio" required><br><br>
+                <div class="mb-3">
+                    <label for="data_fim" class="form-label">Data Prevista de Entrega:</label>
+                    <input type="date" id="data_fim" name="data_fim" class="form-control" required>
+                </div>
 
-        <label for="data_fim">Data Prevista de Entrega:</label>
-        <input type="date" id="data_fim" name="data_fim" required><br><br>
+                <div class="mb-3">
+                    <label for="valor_km" class="form-label">Valor do KM Rodado:</label>
+                    <input type="number" id="valor_km" name="valor_km" class="form-control" step="0.01" required>
+                </div>
 
-        <label for="valor_km">Valor do KM Rodado:</label>
-        <input type="number" id="valor_km" name="valor_km" step="0.01" required><br><br>
-
-        <button type="submit">Confirmar Aluguel</button>
-    </form>
+                <button type="submit" class="btn btn-custom">Confirmar Aluguel</button>
+            </form>
+        </div>
+    </div>
+    
     <footer class="footer text-center">
         <p>© 2024 Abualugas - Todos os direitos reservados</p>
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
