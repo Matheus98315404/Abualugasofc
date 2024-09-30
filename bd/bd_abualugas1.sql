@@ -156,10 +156,6 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
 INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `cpf`, `telefone`, `email`) VALUES
 (1, 'Felipe Matos', '123.456.789-12', '4444-4445', 'felipe2@gmail.com'),
 (2, 'Gustavo Barbosa', '987.654.321-23', '5555-5556', 'gustavo2@gmail.com'),
