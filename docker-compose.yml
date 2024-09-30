@@ -14,7 +14,7 @@ services:
     container_name: "mariadb-server"
     restart: always
     volumes:
-      - ./bd/bd_abualugas.sql:/docker-entrypoint-initdb.d/bd_abualugas.sql
+      - ./bd/bd_abualugas.sql:/docker-entrypoint-initdb.d/bd_abualugas1.sql
     environment:
       - MARIADB_USER=root
       - MARIADB_ROOT_PASSWORD=123
