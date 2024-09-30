@@ -1,6 +1,24 @@
 <?php
 require_once 'conexao.php';
 
+// Função para obter a quilometragem inicial de um veículo
+function kmInicialVeiculo($conexao, $id_veiculo) {
+    $sql = "SELECT km_atual FROM veiculos WHERE id_veiculo = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    mysqli_stmt_bind_param($stmt, 'i', $id_veiculo);
+    
+    if (!mysqli_stmt_execute($stmt)) {
+        die('Erro ao obter quilometragem inicial: ' . mysqli_stmt_error($stmt));
+    }
+
+    mysqli_stmt_bind_result($stmt, $km_inicial);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    return $km_inicial !== null ? $km_inicial : null;
+}
+
+// Função para salvar o empréstimo
 function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $data_fim, $valor_km) {
     $sql = "INSERT INTO alugueis (id_funcionario, id_cliente, data_inicio, data_fim, valor_km) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
@@ -16,6 +34,7 @@ function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $d
     return $id;
 }
 
+// Função para salvar o veículo do empréstimo
 function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     $km_inicial = kmInicialVeiculo($conexao, $id_veiculo);
     if ($km_inicial === null) {
@@ -23,10 +42,10 @@ function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     }
     $km_final = 0;
 
-    $sql = "INSERT INTO alugueis_veiculos (id_aluguel, id_veiculo, km_inicial, km_final) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO alugueis_veiculos (alugueis_id_aluguel, veiculos_id_veiculo, km_inicial, km_final, id_veiculo) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
     
-    mysqli_stmt_bind_param($stmt, 'iiis', $id_aluguel, $id_veiculo, $km_inicial, $km_final);
+    mysqli_stmt_bind_param($stmt, 'iisss', $id_aluguel, $id_veiculo, $km_inicial, $km_final, $id_veiculo);
     if (!mysqli_stmt_execute($stmt)) {
         die('Erro na execução da consulta de veículo: ' . mysqli_stmt_error($stmt));
     }
@@ -34,6 +53,7 @@ function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     mysqli_stmt_close($stmt);
 }
 
+// Validação dos dados do formulário
 if (!isset($_POST['id_funcionario'], $_POST['id_cliente'], $_POST['data_inicio'], $_POST['data_fim'], $_POST['valor_km'], $_POST['veiculos'])) {
     die('Dados do formulário incompletos.');
 }
