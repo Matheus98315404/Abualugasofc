@@ -64,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis` (
   `id_funcionario` INT NOT NULL,
   `data_inicio` DATE NULL DEFAULT NULL,
   `data_fim` DATE NULL DEFAULT NULL,
-  `id_veiculo` INT NOT NULL,
   `id_cliente` INT NOT NULL,
   `valor_km` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`id_aluguel`),
@@ -78,7 +77,6 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis` (
     REFERENCES `bd_abualugas`.`clientes` (`id_cliente`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 21;
-
 
 -- -----------------------------------------------------
 -- Table `bd_abualugas`.`pagamentos`
@@ -143,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
   `veiculos_id_veiculo` INT NOT NULL,
   `km_inicial` VARCHAR(45) NULL,
   `km_final` VARCHAR(45) NULL,
+  `id_veiculo` VARCHAR(45) NULL,
   PRIMARY KEY (`alugueis_id_aluguel`, `veiculos_id_veiculo`),
   INDEX `fk_alugueis_has_veiculos_veiculos1_idx` (`veiculos_id_veiculo` ASC) VISIBLE,
   INDEX `fk_alugueis_has_veiculos_alugueis1_idx` (`alugueis_id_aluguel` ASC) VISIBLE,
@@ -156,8 +155,6 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
     REFERENCES `bd_abualugas`.`veiculos` (`id_veiculo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
