@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
     FOREIGN KEY (`veiculos_id_veiculo`)
     REFERENCES `bd_abualugas`.`veiculos` (`id_veiculo`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION);
 
 INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `cpf`, `telefone`, `email`) VALUES
 (1, 'Felipe Matos', '123.456.789-12', '4444-4445', 'felipe2@gmail.com'),
