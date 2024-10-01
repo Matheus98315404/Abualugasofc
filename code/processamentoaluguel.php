@@ -1,7 +1,6 @@
 <?php
 require_once 'conexao.php';
 
-// Função para obter a quilometragem inicial de um veículo
 function kmInicialVeiculo($conexao, $id_veiculo) {
     $sql = "SELECT km_atual FROM veiculos WHERE id_veiculo = ?";
     $stmt = mysqli_prepare($conexao, $sql);
@@ -18,7 +17,6 @@ function kmInicialVeiculo($conexao, $id_veiculo) {
     return $km_inicial !== null ? $km_inicial : null;
 }
 
-// Função para salvar o empréstimo
 function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $data_fim, $valor_km) {
     $sql = "INSERT INTO alugueis (id_funcionario, id_cliente, data_inicio, data_fim, valor_km) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
@@ -34,7 +32,6 @@ function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $d
     return $id;
 }
 
-// Função para salvar o veículo do empréstimo
 function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     $km_inicial = kmInicialVeiculo($conexao, $id_veiculo);
     if ($km_inicial === null) {
@@ -53,7 +50,6 @@ function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     mysqli_stmt_close($stmt);
 }
 
-// Validação dos dados do formulário
 if (!isset($_POST['id_funcionario'], $_POST['id_cliente'], $_POST['data_inicio'], $_POST['data_fim'], $_POST['valor_km'], $_POST['veiculos'])) {
     die('Dados do formulário incompletos.');
 }
@@ -64,10 +60,8 @@ $data_inicio = $_POST['data_inicio'];
 $data_fim = $_POST['data_fim'];
 $valor_km = $_POST['valor_km'];
 
-// Salva o aluguel
 $id_aluguel = salvarEmprestimo($conexao, $id_funcionario, $id_cliente, $data_inicio, $data_fim, $valor_km);
 
-// Salva os veículos do aluguel
 $veiculos_array = explode(',', $_POST['veiculos']);
 foreach ($veiculos_array as $veiculo) {
     $id_veiculo = intval($veiculo);
@@ -75,10 +69,8 @@ foreach ($veiculos_array as $veiculo) {
         continue; 
     }
 
-    // Salva na tabela alugueis_veiculos
     salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo);
 
-    // Atualiza a disponibilidade do veículo
     $query_atualiza_veiculo = "UPDATE veiculos SET disponivel = 0 WHERE id_veiculo = ?";
     $stmt_atualiza = mysqli_prepare($conexao, $query_atualiza_veiculo);
     
