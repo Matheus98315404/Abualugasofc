@@ -1,140 +1,113 @@
+<?php
+require_once 'conexao.php'; // Certifique-se de que o arquivo de conexão ao banco de dados está correto
+
+// Consulta para obter todos os clientes
+$sql_clientes = "SELECT id_cliente, nome FROM clientes ORDER BY nome"; 
+$stmt_clientes = $conexao->prepare($sql_clientes);
+$stmt_clientes->execute();
+$result_clientes = $stmt_clientes->get_result();
+
+// Verifica se um cliente foi selecionado
+if (isset($_POST['id_cliente'])) {
+    $id_cliente = $_POST['id_cliente'];
+
+    // Consulta para buscar os veículos alugados pelo cliente selecionado
+    $sql = "SELECT a.id_aluguel, v.modelo AS modelo_veiculo, av.km_inicial
+            FROM alugueis a
+            JOIN alugueis_veiculos av ON a.id_aluguel = av.alugueis_id_aluguel
+            JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
+            WHERE a.id_cliente = ?";
+    
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id_cliente);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pagamento</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Pagamento de Empréstimo</title>
     <style>
         body {
-            background-color: #f5f7fa;
+            font-family: Arial, sans-serif;
         }
-        .form-container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
         }
-        .btn-custom {
-            background-color: #4a90e2;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
             color: white;
             border: none;
+            cursor: pointer;
         }
-        .btn-custom:hover {
-            background-color: #357abd;
-        }
-        .btn-back {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-        }
-        .btn-back:hover {
-            background-color: #5a6268;
-        }
-        .form-heading {
-            margin-bottom: 20px;
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <h1>Selecionar Cliente para Pagamento de Empréstimo</h1>
+        <form method="POST" action="">
+            <select name="id_cliente" required>
+                <option value="">Selecione um cliente</option>
+                <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
+                    <option value="<?php echo $cliente['id_cliente']; ?>">
+                        <?php echo htmlspecialchars($cliente['nome']); ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
+            <button type="submit">Buscar</button>
+        </form>
 
-    <div class="container d-flex justify-content-center align-items-center min-vh-100">
-        <div class="form-container">
-            <h2 class="form-heading text-center">Realizar Pagamento</h2>
-            <form action="" method="POST">
-                <div class="mb-3">
-                    <label for="id_cliente" class="form-label">ID Cliente:</label>
-                    <input type="text" id="id_cliente" name="id_cliente" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="id_aluguel" class="form-label">ID Aluguel:</label>
-                    <input type="text" id="id_aluguel" name="id_aluguel" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="km_final" class="form-label">Quilometragem Final:</label>
-                    <input type="number" id="km_final" name="km_final" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="metodo_pagamento" class="form-label">Método de Pagamento:</label>
-                    <select id="metodo_pagamento" name="metodo_pagamento" class="form-select" required>
-                        <option value="Dinheiro">Dinheiro</option>
-                        <option value="Cartao">Cartão</option>
-                        <option value="Pix">Pix</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" name="submit" class="btn btn-custom">Pagar</button>
-                    <a href="index.html" class="btn btn-back ms-2">Voltar ao Início</a>
-                </div>
-            </form>
-        </div>
+        <?php if (isset($result) && $result->num_rows > 0): ?>
+            <h2>Veículos Alugados</h2>
+            <table>
+                <tr>
+                    <th>Modelo do Veículo</th>
+                    <th>Km Inicial</th>
+                    <th>Pagamento</th>
+                </tr>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
+                        <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
+                        <td><a href="realizar_pagamento.php?id_aluguel=<?php echo $row['id_aluguel']; ?>">Realizar Pagamento</a></td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        <?php elseif (isset($result)): ?>
+            <p>Nenhum veículo encontrado para o cliente selecionado.</p>
+        <?php endif; ?>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
-    <?php
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        require_once 'core.php'; 
-
-        $id_cliente = isset($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
-        $id_aluguel = isset($_POST['id_aluguel']) ? $_POST['id_aluguel'] : null;
-        $km_final = isset($_POST['km_final']) ? $_POST['km_final'] : null;
-        $metodo_pagamento = isset($_POST['metodo_pagamento']) ? $_POST['metodo_pagamento'] : null;
-
-        if ($id_cliente && $id_aluguel && $km_final && $metodo_pagamento) {
-            $id_situacao = 1; // Exemplo de valor que pode ser usado
-            $nome_cliente = buscarNomeSituacaoPorId($id_cliente, $id_situacao); 
-
-            $conn = mysqli_connect("localhost", "usuario", "senha", "nome_do_banco");
-
-            if (!$conn) {
-                echo "<p>Falha na conexão com o banco de dados: " . mysqli_connect_error() . "</p>";
-            } else {
-                $stmt = mysqli_prepare($conn, "SELECT km_inicial, valor_km FROM alugueis WHERE id_aluguel = ? AND id_cliente = ?");
-                mysqli_stmt_bind_param($stmt, "ii", $id_aluguel, $id_cliente);
-                mysqli_stmt_execute($stmt);
-                mysqli_stmt_bind_result($stmt, $km_inicial, $valor_km);
-                mysqli_stmt_fetch($stmt);
-
-                if ($km_inicial !== null && $valor_km !== null) {
-                    $km_rodados = $km_final - $km_inicial;
-                    $valor_pagamento = $km_rodados * $valor_km;
-
-                    echo "<p>Nome do Cliente: " . $nome_cliente . "</p>";
-                    echo "<p>Quilometragem Inicial: $km_inicial km</p>";
-                    echo "<p>Quilometragem Final: $km_final km</p>";
-                    echo "<p>Quilometragem Rodada: $km_rodados km</p>";
-                    echo "<p>Valor por Km: R$ $valor_km</p>";
-                    echo "<p>Valor Total do Pagamento: R$ $valor_pagamento</p>";
-
-                    $stmt = mysqli_prepare($conn, "INSERT INTO pagamentos (id_aluguel, data_pagamento, valor_pagamento, metodo_pagamento) VALUES (?, CURDATE(), ?, ?)");
-                    mysqli_stmt_bind_param($stmt, "ids", $id_aluguel, $valor_pagamento, $metodo_pagamento);
-
-                    if (mysqli_stmt_execute($stmt)) {
-                        echo "<p>Pagamento realizado com sucesso.</p>";
-                    } else {
-                        echo "<p>Erro ao realizar o pagamento.</p>";
-                    }
-                } else {
-                    echo "<p>Dados de aluguel não encontrados.</p>";
-                }
-
-                mysqli_stmt_close($stmt);
-                mysqli_close($conn);
-            }
-        } else {
-            echo "<p>Por favor, preencha todos os campos.</p>";
-        }
-    }
-    ?>
-
 </body>
 </html>
 
+<?php
+// Fechar conexões
+$stmt_clientes->close(); // Fechar consulta de clientes
+if (isset($stmt)) {
+    $stmt->close(); // Fechar consulta de veículos, se estiver definido
+}
+$conexao->close();
+?>
