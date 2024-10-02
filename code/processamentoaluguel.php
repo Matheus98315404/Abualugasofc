@@ -82,5 +82,58 @@ foreach ($veiculos_array as $veiculo) {
 
 mysqli_close($conexao);
 
-echo "Aluguel realizado com sucesso!";
+// Estilizando a mensagem de sucesso e centralizando na página
+echo "
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Sucesso</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+        }
+        .message-box {
+            background-color: #dff0d8;
+            color: #3c763d;
+            padding: 20px;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .message-box h1 {
+            margin: 0 0 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            background-color: #337ab7;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .button:hover {
+            background-color: #286090;
+        }
+    </style>
+</head>
+<body>
+
+    <div class='message-box'>
+        <h1>Aluguel realizado com sucesso!</h1>
+        <a href='index.html' class='button'>Voltar à página principal</a>
+    </div>
+
+</body>
+</html>
+";
 ?>
