@@ -8,8 +8,22 @@ $stmt_clientes->execute();
 $result_clientes = $stmt_clientes->get_result();
 
 // Verifica se um cliente foi selecionado
+$id_cliente = null; // Variável para armazenar o id do cliente
+$nome_cliente = ""; // Variável para armazenar o nome do cliente
+
 if (isset($_POST['id_cliente'])) {
     $id_cliente = $_POST['id_cliente'];
+
+    // Consulta para buscar o nome do cliente
+    $sql_nome_cliente = "SELECT nome FROM clientes WHERE id_cliente = ?";
+    $stmt_nome_cliente = $conexao->prepare($sql_nome_cliente);
+    $stmt_nome_cliente->bind_param("i", $id_cliente);
+    $stmt_nome_cliente->execute();
+    $result_nome_cliente = $stmt_nome_cliente->get_result();
+    
+    if ($row_nome_cliente = $result_nome_cliente->fetch_assoc()) {
+        $nome_cliente = $row_nome_cliente['nome'];
+    }
 
     // Consulta para buscar os veículos alugados pelo cliente selecionado
     $sql = "SELECT a.id_aluguel, v.modelo AS modelo_veiculo, av.km_inicial
@@ -72,13 +86,17 @@ if (isset($_POST['id_cliente'])) {
             <select name="id_cliente" required>
                 <option value="">Selecione um cliente</option>
                 <?php while ($cliente = $result_clientes->fetch_assoc()): ?>
-                    <option value="<?php echo $cliente['id_cliente']; ?>">
+                    <option value="<?php echo $cliente['id_cliente']; ?>" <?php echo ($cliente['id_cliente'] == $id_cliente) ? 'selected' : ''; ?>>
                         <?php echo htmlspecialchars($cliente['nome']); ?>
                     </option>
                 <?php endwhile; ?>
             </select>
             <button type="submit">Buscar</button>
         </form>
+
+        <?php if ($id_cliente): ?>
+            <h2>Cliente Consultado: <?php echo htmlspecialchars($nome_cliente); ?></h2>
+        <?php endif; ?>
 
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <h2>Veículos Alugados</h2>
@@ -108,6 +126,9 @@ if (isset($_POST['id_cliente'])) {
 $stmt_clientes->close(); // Fechar consulta de clientes
 if (isset($stmt)) {
     $stmt->close(); // Fechar consulta de veículos, se estiver definido
+}
+if (isset($stmt_nome_cliente)) {
+    $stmt_nome_cliente->close(); // Fechar consulta de nome do cliente
 }
 $conexao->close();
 ?>
