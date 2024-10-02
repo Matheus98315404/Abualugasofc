@@ -85,10 +85,8 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
                 <th>Km Final</th>
             </tr>
             <?php
-            // Conexão com o banco de dados
             require_once 'conexao.php';
 
-            // Loop para buscar e exibir o modelo do veículo associado ao id do aluguel
             foreach ($alugueis_selecionados as $id_aluguel):
                 $sql = "SELECT v.modelo FROM alugueis_veiculos av
                         JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
@@ -98,7 +96,6 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
                 $stmt->execute();
                 $result = $stmt->get_result();
 
-                // Buscar o modelo do veículo
                 $modelo_veiculo = '';
                 if ($row = $result->fetch_assoc()) {
                     $modelo_veiculo = htmlspecialchars($row['modelo']);

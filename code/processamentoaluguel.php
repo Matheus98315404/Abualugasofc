@@ -82,7 +82,6 @@ foreach ($veiculos_array as $veiculo) {
 
 mysqli_close($conexao);
 
-// Estilizando a mensagem de sucesso e centralizando na página
 echo "
 <!DOCTYPE html>
 <html lang='pt-BR'>

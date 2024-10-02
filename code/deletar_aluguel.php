@@ -1,24 +1,21 @@
 <?php
-require_once 'conexao.php'; // Conexão com o banco de dados
+require_once 'conexao.php'; 
 
-$status_message = ""; // Mensagem de status
+$status_message = "";
 
 if (isset($_POST['id_aluguel'])) {
     $id_aluguel = $_POST['id_aluguel'];
 
-    // Preparar e executar a consulta para excluir os registros relacionados em pagamentos
     $sql_delete_pagamentos = "DELETE FROM pagamentos WHERE id_aluguel = ?";
     $stmt_pagamentos = $conexao->prepare($sql_delete_pagamentos);
     $stmt_pagamentos->bind_param("i", $id_aluguel);
 
     if ($stmt_pagamentos->execute()) {
-        // Se a exclusão de pagamentos foi bem-sucedida, excluir os registros relacionados em alugueis_veiculos
         $sql_delete_veiculos = "DELETE FROM alugueis_veiculos WHERE alugueis_id_aluguel = ?";
         $stmt_veiculos = $conexao->prepare($sql_delete_veiculos);
         $stmt_veiculos->bind_param("i", $id_aluguel);
 
         if ($stmt_veiculos->execute()) {
-            // Se a exclusão de alugueis_veiculos foi bem-sucedida, excluir o aluguel
             $sql_delete_aluguel = "DELETE FROM alugueis WHERE id_aluguel = ?";
             $stmt_aluguel = $conexao->prepare($sql_delete_aluguel);
             $stmt_aluguel->bind_param("i", $id_aluguel);
@@ -29,22 +26,18 @@ if (isset($_POST['id_aluguel'])) {
                 $status_message = "Erro ao tentar tornar o veículo disponível: " . $stmt_aluguel->error;
             }
 
-            // Fechar a consulta do aluguel
             $stmt_aluguel->close();
         } else {
             $status_message = "Erro ao tentar tornar o veículo disponível: " . $stmt_veiculos->error;
         }
 
-        // Fechar a consulta dos veículos
         $stmt_veiculos->close();
     } else {
         $status_message = "Erro ao excluir os registros de pagamentos: " . $stmt_pagamentos->error;
     }
 
-    // Fechar a consulta dos pagamentos
     $stmt_pagamentos->close();
 
-    // Fechar a conexão
     $conexao->close();
 } else {
     $status_message = "ID do aluguel não fornecido.";

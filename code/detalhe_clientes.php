@@ -19,7 +19,7 @@
     <h2>Detalhes do Cliente</h2>
 
     <?php
-    require_once 'conexao.php';  // Inclui o arquivo de conexão
+    require_once 'conexao.php';  
 
     $id_cliente = isset($_GET['id_cliente']) ? $_GET['id_cliente'] : '';
 

@@ -1,7 +1,6 @@
 <?php
-require_once 'conexao.php'; // Conexão com o banco de dados
+require_once 'conexao.php'; 
 
-// Verificar se foram selecionados aluguéis
 if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionados']) && isset($_POST['km_final']) && isset($_POST['metodo_pagamento'])) {
     $alugueis_selecionados = $_POST['alugueis_selecionados'];
     $km_final = $_POST['km_final'];
@@ -9,7 +8,6 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
 
     $total_geral = 0;
 
-    // Estilização CSS
     echo "
     <style>
         body {
@@ -65,9 +63,7 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
         Voltar ao Início
       </button>";
 
-    // Loop através dos aluguéis selecionados
     foreach ($alugueis_selecionados as $id_aluguel) {
-        // Consulta para obter as informações do aluguel selecionado
         $sql = "SELECT v.id_veiculo, v.modelo, av.km_inicial, a.valor_km 
                 FROM alugueis_veiculos av
                 JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
@@ -85,14 +81,11 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
             $valor_km = $row['valor_km'];
             $km_final_value = isset($km_final[$id_aluguel]) ? (int)$km_final[$id_aluguel] : 0;
 
-            // Calcular a quantidade de km rodados
             $km_rodado = $km_final_value - $km_inicial;
 
-            // Calcular o preço total
             $preco_total = $km_rodado * $valor_km;
             $total_geral += $preco_total;
 
-            // Exibir detalhes
             echo "<tr>
                     <td>{$id_aluguel}</td>
                     <td>{$modelo_veiculo}</td>
@@ -107,7 +100,6 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
                     </td>
                   </tr>";
 
-            // Atualizar a disponibilidade do veículo para 'indisponível'
             $id_veiculo = $row['id_veiculo'];
             $sql_atualizar_disponibilidade = "UPDATE veiculos SET disponivel = 1 WHERE id_veiculo = ?"; // Definido como 1 para indisponível
             $stmt_atualizar = $conexao->prepare($sql_atualizar_disponibilidade);
@@ -116,18 +108,15 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
             $stmt_atualizar->close();
         }
 
-        // Fechar a consulta
         $stmt->close();
     }
 
-    // Exibir o total geral
     echo "<tr>
             <td colspan='3'><strong>Total Geral</strong></td>
             <td><strong>R$ " . number_format($total_geral, 2, ',', '.') . "</strong></td>
           </tr>";
     echo "</table>";
 
-    // Inserir o pagamento na tabela de pagamentos
     foreach ($alugueis_selecionados as $id_aluguel) {
         $sql_inserir_pagamento = "INSERT INTO pagamentos (valor_pagamento, metodo_pagamento, id_aluguel) VALUES (?, ?, ?)";
         $stmt_pagamento = $conexao->prepare($sql_inserir_pagamento);
@@ -136,7 +125,6 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
         $stmt_pagamento->close();
     }
 
-    // Fechar a conexão
     $conexao->close();
 } else {
     echo "Dados não foram fornecidos corretamente.";

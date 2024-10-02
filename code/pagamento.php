@@ -1,20 +1,19 @@
 <?php
-require_once 'conexao.php'; // Certifique-se de que a conexão ao banco de dados está correta
+require_once 'conexao.php'; 
 
-// Consulta para obter todos os clientes
+
 $sql_clientes = "SELECT id_cliente, nome FROM clientes ORDER BY nome"; 
 $stmt_clientes = $conexao->prepare($sql_clientes);
 $stmt_clientes->execute();
 $result_clientes = $stmt_clientes->get_result();
 
-// Verifica se um cliente foi selecionado
-$id_cliente = null; // Variável para armazenar o id do cliente
-$nome_cliente = ""; // Variável para armazenar o nome do cliente
+
+$id_cliente = null; 
+$nome_cliente = ""; 
 
 if (isset($_POST['id_cliente'])) {
     $id_cliente = $_POST['id_cliente'];
 
-    // Consulta para buscar o nome do cliente
     $sql_nome_cliente = "SELECT nome FROM clientes WHERE id_cliente = ?";
     $stmt_nome_cliente = $conexao->prepare($sql_nome_cliente);
     $stmt_nome_cliente->bind_param("i", $id_cliente);
@@ -25,7 +24,6 @@ if (isset($_POST['id_cliente'])) {
         $nome_cliente = $row_nome_cliente['nome'];
     }
 
-    // Consulta para buscar os veículos alugados pelo cliente selecionado
     $sql = "SELECT a.id_aluguel, v.modelo AS modelo_veiculo, av.km_inicial
             FROM alugueis a
             JOIN alugueis_veiculos av ON a.id_aluguel = av.alugueis_id_aluguel
@@ -167,13 +165,12 @@ if (isset($_POST['id_cliente'])) {
 </html>
 
 <?php
-// Fechar conexões
-$stmt_clientes->close(); // Fechar consulta de clientes
+$stmt_clientes->close(); 
 if (isset($stmt)) {
-    $stmt->close(); // Fechar consulta de veículos, se estiver definido
+    $stmt->close(); 
 }
 if (isset($stmt_nome_cliente)) {
-    $stmt_nome_cliente->close(); // Fechar consulta de nome do cliente
+    $stmt_nome_cliente->close(); 
 }
 $conexao->close();
 ?>
