@@ -1,5 +1,5 @@
 <?php
-require_once 'conexao.php'; // Certifique-se de que o arquivo de conexão ao banco de dados está correto
+require_once 'conexao.php'; // Certifique-se de que a conexão ao banco de dados está correta
 
 // Consulta para obter todos os clientes
 $sql_clientes = "SELECT id_cliente, nome FROM clientes ORDER BY nome"; 
@@ -100,20 +100,25 @@ if (isset($_POST['id_cliente'])) {
 
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <h2>Veículos Alugados</h2>
-            <table>
-                <tr>
-                    <th>Modelo do Veículo</th>
-                    <th>Km Inicial</th>
-                    <th>Pagamento</th>
-                </tr>
-                <?php while ($row = $result->fetch_assoc()): ?>
+            <form method="POST" action="informar_km_final.php"> <!-- Mudar para informar_km_final.php -->
+                <table>
                     <tr>
-                        <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
-                        <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
-                        <td><a href="realizar_pagamento.php?id_aluguel=<?php echo $row['id_aluguel']; ?>">Realizar Pagamento</a></td>
+                        <th>Selecionar</th>
+                        <th>Modelo do Veículo</th>
+                        <th>Km Inicial</th>
                     </tr>
-                <?php endwhile; ?>
-            </table>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="alugueis_selecionados[]" value="<?php echo $row['id_aluguel']; ?>">
+                            </td>
+                            <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
+                            <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </table>
+                <button type="submit">Informar Km Final</button> <!-- Botão para submeter -->
+            </form>
         <?php elseif (isset($result)): ?>
             <p>Nenhum veículo encontrado para o cliente selecionado.</p>
         <?php endif; ?>
