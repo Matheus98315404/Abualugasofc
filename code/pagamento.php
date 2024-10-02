@@ -48,34 +48,74 @@ if (isset($_POST['id_cliente'])) {
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
         }
+
         .container {
-            width: 50%;
+            width: 60%;
+            background-color: #fff;
             margin: 0 auto;
-            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        select, input[type="radio"], button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        select:focus, input[type="radio"]:focus, button:focus {
+            border-color: #28a745;
+            outline: none;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         th, td {
+            padding: 12px;
             border: 1px solid #ddd;
-            padding: 8px;
+            text-align: left;
         }
+
         th {
-            background-color: #f2f2f2;
+            background-color: #f8f8f8;
         }
+
         button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #4CAF50;
+            background-color: #28a745;
             color: white;
             border: none;
             cursor: pointer;
+            padding: 12px;
         }
+
         button:hover {
-            background-color: #45a049;
+            background-color: #218838;
+        }
+
+        p {
+            text-align: center;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -100,7 +140,7 @@ if (isset($_POST['id_cliente'])) {
 
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <h2>Veículos Alugados</h2>
-            <form method="POST" action="informar_km_final.php"> <!-- Mudar para informar_km_final.php -->
+            <form method="POST" action="informar_km_final.php">
                 <table>
                     <tr>
                         <th>Selecionar</th>
@@ -117,10 +157,10 @@ if (isset($_POST['id_cliente'])) {
                         </tr>
                     <?php endwhile; ?>
                 </table>
-                <button type="submit">Informar Km Final</button> <!-- Botão para submeter -->
+                <button type="submit">Informar Km Final</button>
             </form>
         <?php elseif (isset($result)): ?>
-            <p>Nenhum veículo encontrado para o cliente selecionado.</p>
+            <p>Nenhum aluguel encontrado para o cliente selecionado.</p>
         <?php endif; ?>
     </div>
 </body>

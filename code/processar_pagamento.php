@@ -2,20 +2,54 @@
 require_once 'conexao.php'; // Conexão com o banco de dados
 
 // Verificar se foram selecionados aluguéis
-if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionados']) && isset($_POST['km_final']) && isset($_POST['metodo_pagamento']) && isset($_POST['data_pagamento'])) {
+if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionados']) && isset($_POST['km_final']) && isset($_POST['metodo_pagamento'])) {
     $alugueis_selecionados = $_POST['alugueis_selecionados'];
     $km_final = $_POST['km_final'];
     $metodo_pagamento = $_POST['metodo_pagamento'];
-    $data_pagamento_input = $_POST['data_pagamento']; // Data recebida do formulário
-
-    // Tente formatar a data
-    $data_pagamento = date('Y-m-d', strtotime($data_pagamento_input)); // Formatar a data
-
-    if ($data_pagamento === false) {
-        die("Formato de data inválido.");
-    }
 
     $total_geral = 0;
+
+    // Estilização CSS
+    echo "
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+        td {
+            color: #333;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .total {
+            background-color: #007BFF;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+    ";
 
     echo "<h1>Resumo do Pagamento</h1>";
     echo "<table border='1'>
@@ -25,8 +59,12 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
                 <th>Km Rodados</th>
                 <th>Método de Pagamento</th>
                 <th>Preço Total</th>
+                <th>Ação</th>
             </tr>";
-    
+    echo "<button onclick=\"window.location.href='index.html'\" style='display: block; margin: 20px auto; padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;'>
+        Voltar ao Início
+      </button>";
+
     // Loop através dos aluguéis selecionados
     foreach ($alugueis_selecionados as $id_aluguel) {
         // Consulta para obter as informações do aluguel selecionado
@@ -61,11 +99,17 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
                     <td>{$km_rodado}</td>
                     <td>{$metodo_pagamento}</td>
                     <td>R$ " . number_format($preco_total, 2, ',', '.') . "</td>
+                    <td>
+                      <form action='deletar_aluguel.php' method='POST' style='display:inline;'>
+                        <input type='hidden' name='id_aluguel' value='{$id_aluguel}'>
+                        <button type='submit' style='background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;'>Alterar disponiblilidade</button>
+                      </form>
+                    </td>
                   </tr>";
-            
-            // Atualizar a disponibilidade do veículo para 'disponível'
+
+            // Atualizar a disponibilidade do veículo para 'indisponível'
             $id_veiculo = $row['id_veiculo'];
-            $sql_atualizar_disponibilidade = "UPDATE veiculos SET disponivel = 0 WHERE id_veiculo = ?";
+            $sql_atualizar_disponibilidade = "UPDATE veiculos SET disponivel = 1 WHERE id_veiculo = ?"; // Definido como 1 para indisponível
             $stmt_atualizar = $conexao->prepare($sql_atualizar_disponibilidade);
             $stmt_atualizar->bind_param("i", $id_veiculo);
             $stmt_atualizar->execute();
@@ -83,18 +127,18 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
           </tr>";
     echo "</table>";
 
-    // Inserir o pagamento no banco de dados
+    // Inserir o pagamento na tabela de pagamentos
     foreach ($alugueis_selecionados as $id_aluguel) {
-        $sql_inserir_pagamento = "INSERT INTO pagamentos (valor_pagamento, metodo_pagamento, id_aluguel, data_pagamento) VALUES (?, ?, ?, ?)";
+        $sql_inserir_pagamento = "INSERT INTO pagamentos (valor_pagamento, metodo_pagamento, id_aluguel) VALUES (?, ?, ?)";
         $stmt_pagamento = $conexao->prepare($sql_inserir_pagamento);
-        $stmt_pagamento->bind_param("dssi", $preco_total, $metodo_pagamento, $id_aluguel, $data_pagamento); // Aqui você pode usar preco_total de cada aluguel, se necessário
+        $stmt_pagamento->bind_param("ssi", $preco_total, $metodo_pagamento, $id_aluguel);
         $stmt_pagamento->execute();
         $stmt_pagamento->close();
     }
 
+    // Fechar a conexão
+    $conexao->close();
 } else {
-    echo "Nenhum aluguel selecionado ou quilometragem final não fornecida.";
+    echo "Dados não foram fornecidos corretamente.";
 }
-
-$conexao->close();
 ?>
