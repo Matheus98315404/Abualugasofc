@@ -91,7 +91,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <!-- Add navbar items here -->
                 </ul>
             </div>
         </div>

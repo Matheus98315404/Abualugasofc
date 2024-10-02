@@ -8,21 +8,17 @@
 <body>
     <h2>Clientes Disponíveis</h2>
 
-    <!-- Formulário de Pesquisa -->
     <form method="GET" action="">
         <input type="text" name="search" placeholder="Buscar por nome" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
         <input type="submit" value="Pesquisar">
     </form>
 
     <?php
-    // Inclui o arquivo de conexão
     require_once 'conexao.php';
 
-    // Obtém o termo de pesquisa e o ID do cliente, se houver
     $search = isset($_GET['search']) ? $_GET['search'] : '';
     $id_cliente = isset($_GET['id_cliente']) ? $_GET['id_cliente'] : '';
 
-    // Consulta para obter clientes que correspondem ao termo de pesquisa
     $queryClientes = "SELECT id_cliente, nome FROM clientes WHERE nome LIKE '%$search%'";
     $resultClientes = mysqli_query($conexao, $queryClientes);
 
@@ -41,7 +37,6 @@
     }
 
     if ($id_cliente) {
-        // Consulta para obter detalhes do cliente
         $queryCliente = "SELECT nome FROM clientes WHERE id_cliente = '$id_cliente'";
         $resultCliente = mysqli_query($conexao, $queryCliente);
 
@@ -50,7 +45,6 @@
             echo '<h2>Detalhes do Cliente</h2>';
             echo '<p><strong>Nome do Cliente:</strong> ' . $cliente['nome'] . '</p>';
 
-            // Consulta para obter aluguéis do cliente
             $queryAlugueis = "SELECT id_aluguel, modelo_carro FROM alugueis WHERE id_cliente = '$id_cliente'";
             $resultAlugueis = mysqli_query($conexao, $queryAlugueis);
 
@@ -65,7 +59,6 @@
                 echo '<p>Não há aluguéis para este cliente.</p>';
             }
 
-            // Consulta para obter todos os funcionários
             $queryFuncionarios = "SELECT id_funcionario, nome FROM funcionarios";
             $resultFuncionarios = mysqli_query($conexao, $queryFuncionarios);
 
@@ -91,12 +84,10 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_funcionario = isset($_POST['id_funcionario']) ? $_POST['id_funcionario'] : '';
         if ($id_cliente && $id_funcionario) {
-            // Aqui você pode processar o registro do empréstimo
             echo '<p>Empréstimo registrado para o cliente ID ' . $id_cliente . ' com o funcionário ID ' . $id_funcionario . '.</p>';
         }
     }
 
-    // Fecha a conexão com o banco de dados
     mysqli_close($conexao);
     ?>
 </body>

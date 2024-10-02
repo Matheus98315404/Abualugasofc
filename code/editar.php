@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
-    // Redirecionar após a atualização
     header("Location: listar_carros.php");
     exit();
 } else {

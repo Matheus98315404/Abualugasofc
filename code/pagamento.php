@@ -81,27 +81,22 @@
 
     <?php
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        require_once 'core.php'; // Importa a função buscarNomeSituacaoPorId
+        require_once 'core.php'; 
 
-        // Verificação para evitar erros de chaves indefinidas
         $id_cliente = isset($_POST['id_cliente']) ? $_POST['id_cliente'] : null;
         $id_aluguel = isset($_POST['id_aluguel']) ? $_POST['id_aluguel'] : null;
         $km_final = isset($_POST['km_final']) ? $_POST['km_final'] : null;
         $metodo_pagamento = isset($_POST['metodo_pagamento']) ? $_POST['metodo_pagamento'] : null;
 
-        // Validação adicional para garantir que os dados foram fornecidos
         if ($id_cliente && $id_aluguel && $km_final && $metodo_pagamento) {
-            // Corrigir a chamada da função para passar os dois parâmetros necessários
             $id_situacao = 1; // Exemplo de valor que pode ser usado
             $nome_cliente = buscarNomeSituacaoPorId($id_cliente, $id_situacao); 
 
-            // Conexão ao banco de dados
             $conn = mysqli_connect("localhost", "usuario", "senha", "nome_do_banco");
 
             if (!$conn) {
                 echo "<p>Falha na conexão com o banco de dados: " . mysqli_connect_error() . "</p>";
             } else {
-                // Recupera os dados do aluguel
                 $stmt = mysqli_prepare($conn, "SELECT km_inicial, valor_km FROM alugueis WHERE id_aluguel = ? AND id_cliente = ?");
                 mysqli_stmt_bind_param($stmt, "ii", $id_aluguel, $id_cliente);
                 mysqli_stmt_execute($stmt);
@@ -109,7 +104,6 @@
                 mysqli_stmt_fetch($stmt);
 
                 if ($km_inicial !== null && $valor_km !== null) {
-                    // Cálculo do valor do pagamento
                     $km_rodados = $km_final - $km_inicial;
                     $valor_pagamento = $km_rodados * $valor_km;
 
@@ -120,7 +114,6 @@
                     echo "<p>Valor por Km: R$ $valor_km</p>";
                     echo "<p>Valor Total do Pagamento: R$ $valor_pagamento</p>";
 
-                    // Insere o pagamento na tabela
                     $stmt = mysqli_prepare($conn, "INSERT INTO pagamentos (id_aluguel, data_pagamento, valor_pagamento, metodo_pagamento) VALUES (?, CURDATE(), ?, ?)");
                     mysqli_stmt_bind_param($stmt, "ids", $id_aluguel, $valor_pagamento, $metodo_pagamento);
 

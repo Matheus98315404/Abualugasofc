@@ -21,11 +21,9 @@
     <?php
     require_once 'conexao.php';  // Inclui o arquivo de conexão
 
-    // Obtém o ID do cliente
     $id_cliente = isset($_GET['id_cliente']) ? $_GET['id_cliente'] : '';
 
     if ($id_cliente) {
-        // Consulta para obter detalhes do cliente
         $queryCliente = "SELECT nome FROM clientes WHERE id_cliente = '$id_cliente'";
         $resultCliente = mysqli_query($conexao, $queryCliente);
 
@@ -33,14 +31,13 @@
             $cliente = mysqli_fetch_assoc($resultCliente);
             echo "<p><strong>Nome do Cliente:</strong> " . $cliente['nome'] . "</p>";
 
-            // Consulta para obter aluguéis do cliente
             $queryAlugueis = "SELECT id_aluguel, modelo_carro, km_inicial, km_final, valor_km FROM alugueis WHERE id_cliente = '$id_cliente'";
             $resultAlugueis = mysqli_query($conexao, $queryAlugueis);
 
             echo "<h3>Aluguéis do Cliente</h3>";
 
             if ($resultAlugueis && mysqli_num_rows($resultAlugueis) > 0) {
-                $alugueis = mysqli_fetch_all($resultAlugueis, MYSQLI_ASSOC);  // Obtém todos os resultados como um array associativo
+                $alugueis = mysqli_fetch_all($resultAlugueis, MYSQLI_ASSOC); 
                 
                 echo '<ul>';
                 foreach ($alugueis as $aluguel) {
@@ -55,7 +52,6 @@
                 echo "<p>Não há aluguéis para este cliente.</p>";
             }
 
-            // Consulta para obter todos os funcionários
             $queryFuncionarios = "SELECT id_funcionario, nome FROM funcionarios";
             $resultFuncionarios = mysqli_query($conexao, $queryFuncionarios);
 

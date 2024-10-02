@@ -9,14 +9,12 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Preparar e executar a exclusão
     $sql = "DELETE FROM veiculos WHERE id_veiculo = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
-    // Redirecionar para a lista de carros após a exclusão
     header("Location: listar_carros.php");
     exit();
 }

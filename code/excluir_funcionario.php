@@ -9,7 +9,6 @@ if (!isset($_GET['id'])) {
 $id = $_GET['id'];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Primeiro, excluir todos os registros na tabela 'pagamentos' que referenciam 'alugueis'
     $sql = "DELETE FROM pagamentos WHERE id_aluguel IN (SELECT id_aluguel FROM alugueis WHERE id_funcionario = ?)";
     $stmt = mysqli_prepare($conexao, $sql);
     if (!$stmt) {
@@ -21,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     mysqli_stmt_close($stmt);
 
-    // Agora, excluir todos os registros na tabela 'alugueis' que referenciam este funcionário
     $sql = "DELETE FROM alugueis WHERE id_funcionario = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     if (!$stmt) {
@@ -33,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     mysqli_stmt_close($stmt);
 
-    // Finalmente, excluir o funcionário
     $sql = "DELETE FROM funcionarios WHERE id_funcionario = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     if (!$stmt) {

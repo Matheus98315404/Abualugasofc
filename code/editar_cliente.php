@@ -8,7 +8,6 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $cpf_cnpj = $_POST['cpf_cnpj'];
@@ -28,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     exit();
 }
 
-// Obter dados do cliente
 $sql = "SELECT * FROM clientes WHERE id_cliente = ?";
 $stmt = mysqli_prepare($conexao, $sql);
 mysqli_stmt_bind_param($stmt, "i", $id);

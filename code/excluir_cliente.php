@@ -8,16 +8,13 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
-// Se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Remover as referências do cliente em outras tabelas
     $sql = "UPDATE alugueis SET id_cliente = NULL WHERE id_cliente = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
 
-    // Agora, excluir o cliente
     $sql = "DELETE FROM clientes WHERE id_cliente = ?";
     $stmt = mysqli_prepare($conexao, $sql);
     mysqli_stmt_bind_param($stmt, "i", $id);

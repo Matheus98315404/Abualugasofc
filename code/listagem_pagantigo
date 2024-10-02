@@ -37,10 +37,8 @@
     <?php
     require_once 'conexao.php';
 
-    // Obtém o termo de pesquisa, se houver
     $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-    // Consulta para obter todos os clientes que correspondem ao termo de pesquisa
     $query = "SELECT id_cliente, nome FROM clientes WHERE nome LIKE '%$searchTerm%'";
     $result = mysqli_query($conexao, $query);
 
@@ -60,11 +58,9 @@
         echo "<p>Erro ao buscar dados: " . mysqli_error($link) . "</p>";
     }
 
-    // Se um cliente foi selecionado, mostra os aluguéis atuais
     if (isset($_GET['id_cliente'])) {
         $id_cliente = $_GET['id_cliente'];
 
-        // Consulta para obter aluguéis do cliente selecionado
         $queryAlugueis = "SELECT a.id_aluguel, a.modelo_carro, a.km_inicial, a.km_final, a.valor_km FROM alugueis a WHERE a.id_cliente = $id_cliente";
         $resultAlugueis = mysqli_query($link, $queryAlugueis);
 
