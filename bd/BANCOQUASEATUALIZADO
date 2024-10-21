@@ -1,0 +1,150 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema bd_abualugas
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema bd_abualugas
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `bd_abualugas` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `bd_abualugas` ;
+
+-- -----------------------------------------------------
+-- Table `bd_abualugas`.`funcionarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_abualugas`.`funcionarios` (
+  `id_funcionario` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NULL DEFAULT NULL,
+  `cpf` VARCHAR(20) NULL DEFAULT NULL,
+  `telefone` VARCHAR(20) NULL DEFAULT NULL,
+  `email` VARCHAR(100) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_funcionario`),
+  UNIQUE INDEX `cpf` (`cpf` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 21;
+
+
+-- -----------------------------------------------------
+-- Table `bd_abualugas`.`clientes`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_abualugas`.`clientes` (
+  `id_cliente` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NULL DEFAULT NULL,
+  `cpf_cnpj` VARCHAR(20) NULL DEFAULT NULL,
+  `endereco` VARCHAR(255) NULL DEFAULT NULL,
+  `telefone` VARCHAR(20) NULL DEFAULT NULL,
+  `email` VARCHAR(100) NULL DEFAULT NULL,
+  `carteira_motorista` VARCHAR(20) NOT NULL,
+  `validade_carteira` DATE NOT NULL,
+  `fisico_juridico` VARCHAR(45) NULL,
+  PRIMARY KEY (`id_cliente`),
+  UNIQUE INDEX `cpf_cnpj` (`cpf_cnpj` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 21
+DEFAULT CHARACTER SET = ascii;
+
+
+-- -----------------------------------------------------
+-- Table `bd_abualugas`.`alugueis`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis` (
+  `id_aluguel` INT NOT NULL AUTO_INCREMENT,
+  `id_funcionario` INT NOT NULL,
+  `data_inicio` DATE NULL DEFAULT NULL,
+  `data_fim` DATE NULL DEFAULT NULL,
+  `id_cliente` INT NOT NULL,
+  `valor_km` DECIMAL(10,2) NOT NULL,
+  PRIMARY KEY (`id_aluguel`),
+  INDEX `id_funcionario` (`id_funcionario` ASC) VISIBLE,
+  INDEX `fk_alugueis_clientes1_idx` (`id_cliente` ASC) VISIBLE,
+  CONSTRAINT `alugueis_ibfk_1`
+    FOREIGN KEY (`id_funcionario`)
+    REFERENCES `bd_abualugas`.`funcionarios` (`id_funcionario`),
+  CONSTRAINT `fk_alugueis_clientes1`
+    FOREIGN KEY (`id_cliente`)
+    REFERENCES `bd_abualugas`.`clientes` (`id_cliente`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 21;
+
+
+-- -----------------------------------------------------
+-- Table `bd_abualugas`.`pagamentos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_abualugas`.`pagamentos` (
+  `id_pagamento` INT NOT NULL AUTO_INCREMENT,
+  `id_aluguel` INT NOT NULL,
+  `data_pagamento` DATE NULL DEFAULT NULL,
+  `valor_pagamento` DECIMAL(10,2) NULL DEFAULT NULL,
+  `metodo_pagamento` ENUM('Dinheiro', 'Cartao', 'Pix', 'Outro') NULL DEFAULT NULL,
+  PRIMARY KEY (`id_pagamento`),
+  INDEX `id_aluguel` (`id_aluguel` ASC) VISIBLE,
+  CONSTRAINT `pagamentos_ibfk_1`
+    FOREIGN KEY (`id_aluguel`)
+    REFERENCES `bd_abualugas`.`alugueis` (`id_aluguel`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 21;
+
+
+-- -----------------------------------------------------
+-- Table `bd_abualugas`.`veiculos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_abualugas`.`veiculos` (
+  `id_veiculo` INT NOT NULL AUTO_INCREMENT,
+  `modelo` VARCHAR(100) NOT NULL,
+  `marca` VARCHAR(100) NOT NULL,
+  `ano` INT NOT NULL,
+  `placa` VARCHAR(10) NOT NULL,
+  `cor` VARCHAR(20) NOT NULL,
+  `km_atual` INT NOT NULL,
+  `tipo` ENUM('Carro', 'Moto') NOT NULL,
+  `airbag` TINYINT(1) NOT NULL,
+  `num_bancos` INT NOT NULL,
+  `num_portas` INT NOT NULL,
+  `combustivel` ENUM('Gasolina', 'Etanol', 'Diesel', 'Flex', 'Eletrico', 'Hibrido') NOT NULL,
+  `cambio` ENUM('Manual', 'Automatico', 'CVT', 'DCT') NOT NULL,
+  `ar_condicionado` TINYINT(1) NOT NULL,
+  `direcao` ENUM('Mecanica', 'Hidraulica', 'Eletrica') NOT NULL,
+  `som` TINYINT(1) NOT NULL,
+  `bluetooth` TINYINT(1) NOT NULL,
+  `gps` TINYINT(1) NOT NULL,
+  `sensor_estacionamento` TINYINT(1) NOT NULL,
+  `camera_re` TINYINT(1) NOT NULL,
+  `disponivel` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`id_veiculo`),
+  UNIQUE INDEX `placa` (`placa` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 21;
+
+
+-- -----------------------------------------------------
+-- Table `bd_abualugas`.`alugueis_veiculos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
+  `alugueis_id_aluguel` INT NOT NULL,
+  `veiculos_id_veiculo` INT NOT NULL,
+  `km_inicial` VARCHAR(45) NULL,
+  `km_final` VARCHAR(45) NULL,
+  PRIMARY KEY (`alugueis_id_aluguel`, `veiculos_id_veiculo`),
+  INDEX `fk_alugueis_has_veiculos_veiculos1_idx` (`veiculos_id_veiculo` ASC) VISIBLE,
+  INDEX `fk_alugueis_has_veiculos_alugueis1_idx` (`alugueis_id_aluguel` ASC) VISIBLE,
+  CONSTRAINT `fk_alugueis_has_veiculos_alugueis1`
+    FOREIGN KEY (`alugueis_id_aluguel`)
+    REFERENCES `bd_abualugas`.`alugueis` (`id_aluguel`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alugueis_has_veiculos_veiculos1`
+    FOREIGN KEY (`veiculos_id_veiculo`)
+    REFERENCES `bd_abualugas`.`veiculos` (`id_veiculo`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
