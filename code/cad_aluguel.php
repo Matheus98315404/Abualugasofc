@@ -140,6 +140,8 @@
                 <div class="mb-3">
                     <label for="funcionario" class="form-label">Funcionário:</label>
                     <select id="funcionario" name="id_funcionario" class="form-select" required>
+                    <option value=""></option>
+
                         <?php
                         require_once 'conexao.php';
                         $query_funcionarios = "SELECT id_funcionario, nome FROM funcionarios";
@@ -154,6 +156,7 @@
                 <div class="mb-3">
                     <label for="cliente" class="form-label">Cliente:</label>
                     <select id="cliente" name="id_cliente" class="form-select" required>
+                        <option value=""></option>
                         <?php
                         $query_clientes = "SELECT id_cliente, nome FROM clientes";
                         $result_clientes = mysqli_query($conexao, $query_clientes);

@@ -141,7 +141,6 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
   `veiculos_id_veiculo` INT NOT NULL,
   `km_inicial` VARCHAR(45) NULL,
   `km_final` VARCHAR(45) NULL,
-  `id_veiculo` VARCHAR(45) NULL,
   PRIMARY KEY (`alugueis_id_aluguel`, `veiculos_id_veiculo`),
   INDEX `fk_alugueis_has_veiculos_veiculos1_idx` (`veiculos_id_veiculo` ASC) VISIBLE,
   INDEX `fk_alugueis_has_veiculos_alugueis1_idx` (`alugueis_id_aluguel` ASC) VISIBLE,

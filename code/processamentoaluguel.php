@@ -39,10 +39,10 @@ function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     }
     $km_final = 0;
 
-    $sql = "INSERT INTO alugueis_veiculos (alugueis_id_aluguel, veiculos_id_veiculo, km_inicial, km_final, id_veiculo) VALUES (?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO alugueis_veiculos (alugueis_id_aluguel, veiculos_id_veiculo, km_inicial, km_final) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
     
-    mysqli_stmt_bind_param($stmt, 'iisss', $id_aluguel, $id_veiculo, $km_inicial, $km_final, $id_veiculo);
+    mysqli_stmt_bind_param($stmt, 'iiss', $id_aluguel, $id_veiculo, $km_inicial, $km_final);
     if (!mysqli_stmt_execute($stmt)) {
         die('Erro na execução da consulta de veículo: ' . mysqli_stmt_error($stmt));
     }
