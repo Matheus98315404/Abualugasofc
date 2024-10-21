@@ -48,6 +48,8 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`clientes` (
   `email` VARCHAR(100) NULL DEFAULT NULL,
   `carteira_motorista` VARCHAR(20) NOT NULL,
   `validade_carteira` DATE NOT NULL,
+  `fisico_juridico` ENUM('Pessoa', 'Empresa') NOT NULL,
+
   PRIMARY KEY (`id_cliente`),
   UNIQUE INDEX `cpf_cnpj` (`cpf_cnpj` ASC) VISIBLE)
 ENGINE = InnoDB
