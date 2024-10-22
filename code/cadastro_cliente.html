@@ -8,6 +8,9 @@
     <style>
         body {
             background-color: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .form-container {
             background-color: #ffffff;
@@ -26,76 +29,25 @@
         .btn-custom:hover {
             background-color: #357abd;
         }
-        .back-link {
-            display: block;
-            margin-top: 20px;
-            color: #4a90e2;
-            text-decoration: none;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
         .btn-group-custom {
             margin-top: 20px;
             text-align: center;
         }
-
-            body {
-                display: flex;
-                flex-direction: column;
-                min-height: 100vh;
-            }
-            .navbar {
-                background-color: #343a40;
-            }
-            .navbar-brand {
-                font-weight: bold;
-                font-size: 1.5rem;
-            }
-            .navbar-nav .nav-link {
-                color: #ffffff !important;
-            }
-            .navbar-nav .nav-link:hover {
-                background-color: #495057;
-                border-radius: 5px;
-            }
-            .footer {
-                margin-top: auto;
-                padding: 20px 0;
-                background-color: #343a40;
-                color: white;
-            }
-            .slogan {
-                text-align: center;
-                margin: 20px 0;
-            }
-            .card-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-                margin: 20px 0;
-            }
-            .card {
-                width: 18rem;
-            }
-            .card-img-top {
-                height: 200px;
-                object-fit: cover;
-            }
+        .navbar {
+            background-color: #343a40;
+        }
+        .footer {
+            margin-top: auto;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">Abualugas</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -136,6 +88,15 @@
                 <div class="mb-3">
                     <label for="validade_carteira" class="form-label">Validade da Carteira:</label>
                     <input type="date" id="validade_carteira" name="validade_carteira" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="fisico_juridico" class="form-label">Tipo de Cliente:</label>
+                    <select id="fisico_juridico" name="fisico_juridico" class="form-select" required>
+                        <option value="" disabled selected>Selecione...</option>
+                        <option value="Pessoa Física">Pessoa Física</option>
+                        <option value="Empresa">Empresa</option>
+                    </select>
                 </div>
 
                 <div class="btn-group-custom">
