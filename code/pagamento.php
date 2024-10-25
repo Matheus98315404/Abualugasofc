@@ -1,12 +1,10 @@
 <?php
 require_once 'conexao.php'; 
 
-
 $sql_clientes = "SELECT id_cliente, nome FROM clientes ORDER BY nome"; 
 $stmt_clientes = $conexao->prepare($sql_clientes);
 $stmt_clientes->execute();
 $result_clientes = $stmt_clientes->get_result();
-
 
 $id_cliente = null; 
 $nome_cliente = ""; 
@@ -148,7 +146,7 @@ if (isset($_POST['id_cliente'])) {
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
                             <td>
-                                <input type="radio" name="alugueis_selecionados[]" value="<?php echo $row['id_aluguel']; ?>">
+                                <input type="radio" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>">
                             </td>
                             <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
                             <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
