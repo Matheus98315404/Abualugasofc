@@ -1,8 +1,8 @@
 <?php
 require_once 'conexao.php';
-
-if (isset($_POST['alugueis_selecionados']) && count($_POST['alugueis_selecionados']) > 0) {
-    $id_aluguel = $_POST['alugueis_selecionados'][0];
+     
+if (isset($_POST['aluguel_selecionado'])) {
+    $id_aluguel = $_POST['aluguel_selecionado'];
 
     // Consulta para obter as informações do aluguel selecionado
     $sql_aluguel = "
@@ -100,15 +100,12 @@ if (isset($_POST['alugueis_selecionados']) && count($_POST['alugueis_selecionado
         <h1>Informar Km Final</h1>
         <p>Veículo: <?php echo htmlspecialchars($modelo_veiculo); ?></p>
         <p>Km Inicial: <?php echo htmlspecialchars($km_inicial); ?></p>
-        <p>Valor por Km: R$ <?php echo number_format($valor_km, 2, ',', '.'); ?></p>
-        
-        <form method="POST" action="calcular_valor.php">
+
+        <form method="POST" action="processar_pagamento.php">
             <input type="hidden" name="id_aluguel" value="<?php echo $id_aluguel; ?>">
-            <input type="hidden" name="km_inicial" value="<?php echo $km_inicial; ?>">
-            <input type="hidden" name="valor_km" value="<?php echo $valor_km; ?>">
-            <label for="km_final">Informe o Km Final:</label>
-            <input type="number" name="km_final" id="km_final" required min="<?php echo $km_inicial; ?>">
-            <button type="submit">Calcular Valor</button>
+            <label for="km_final">Km Final:</label>
+            <input type="number" name="km_final" id="km_final" required>
+            <button type="submit">Confirmar Pagamento</button>
         </form>
     </div>
 </body>
