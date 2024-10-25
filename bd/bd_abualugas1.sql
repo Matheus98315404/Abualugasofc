@@ -7,7 +7,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
+-- --------------------- --------------------------------
 -- Schema bd_abualugas
 -- -----------------------------------------------------
 
@@ -183,26 +183,27 @@ INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `cpf`, `telefone`, `email`
 
 
 INSERT INTO `clientes` (`id_cliente`, `nome`, `cpf_cnpj`, `endereco`, `telefone`, `email`, `carteira_motorista`, `validade_carteira`, `fisico_juridico`) VALUES
-(1, 'João Silva', '123.456.789-00', 'Rua A, 123', '1111-1111', 'joao@gmail.com', 'ABC123456', '2025-12-31', 'Pessoa'),
-(2, 'Maria Oliveira', '987.654.321-00', 'Rua B, 456', '2222-2222', 'maria@gmail.com', 'DEF654321', '2024-06-30', 'Pessoa'),
-(3, 'Pedro Santos', '456.789.123-00', 'Rua C, 789', '3333-3333', 'pedro@gmail.com', 'GHI789123', '2026-03-15', 'Pessoa'),
-(4, 'Ana Souza', '111.222.333-44', 'Av. X, 789', '4444-4444', 'ana@gmail.com', 'JKL987654', '2025-08-15', 'Pessoa'),
-(5, 'Carlos Ferreira', '222.333.444-55', 'Rua Y, 456', '5555-5555', 'carlos@gmail.com', 'MNO123456', '2024-11-30', 'Pessoa'),
-(6, 'Mariana Costa', '333.444.555-66', 'Rua Z, 321', '6666-6666', 'mariana@gmail.com', 'PQR789012', '2026-05-20', 'Pessoa'),
-(7, 'Rafaela Lima', '444.555.666-77', 'Av. W, 987', '7777-7777', 'rafaela@gmail.com', 'STU345678', '2023-09-10', 'Pessoa'),
-(8, 'Rodrigo Vieira', '555.666.777-88', 'Rua K, 654', '8888-8888', 'rodrigo@gmail.com', 'VWX901234', '2024-07-25', 'Pessoa'),
-(9, 'Camila Santos', '666.777.888-99', 'Av. M, 987', '9999-9999', 'camila@gmail.com', 'YZA567890', '2025-04-05', 'Pessoa'),
-(10, 'Fernanda Oliveira', '777.888.999-00', 'Rua D, 321', '1010-1010', 'fernanda@gmail.com', 'BCD234567', '2023-11-15', 'Pessoa'),
-(11, 'Gustavo Ferreira', '888.999.000-11', 'Av. E, 654', '1212-1212', 'gustavo@gmail.com', 'EFG345678', '2024-09-20', 'Pessoa'),
-(12, 'Lucas Souza', '999.000.111-22', 'Rua F, 987', '1313-1313', 'lucas@gmail.com', 'HIJ456789', '2025-06-30', 'Pessoa'),
-(13, 'Patrícia Lima', '000.111.222-33', 'Av. G, 456', '1414-1414', 'patricia@gmail.com', 'KLM567890', '2026-01-25', 'Pessoa'),
-(14, 'Renato Costa', '111.222.333-55', 'Rua H, 654', '1515-1515', 'renato@gmail.com', 'NOP678901', '2023-07-10', 'Pessoa'),
-(15, 'Sandra Vieira', '222.333.444-66', 'Av. I, 789', '1616-1616', 'sandra@gmail.com', 'QRS789012', '2024-04-15', 'Pessoa'),
-(16, 'Thiago Santos', '333.444.555-77', 'Rua J, 123', '1717-1717', 'thiago@gmail.com', 'TUV890123', '2025-09-05', 'Pessoa'),
-(17, 'Vanessa Oliveira', '444.555.666-88', 'Av. L, 987', '1818-1818', 'vanessa@gmail.com', 'WXY901234', '2026-02-20', 'Pessoa'),
-(18, 'Roberto Silva', '555.666.777-99', 'Rua N, 321', '1919-1919', 'roberto@gmail.com', 'YZA012345', '2023-12-01', 'Pessoa'),
-(19, 'Carolina Souza', '666.777.888-00', 'Av. O, 654', '2020-2020', 'carolina@gmail.com', 'BCD123456', '2024-10-10', 'Pessoa'),
-(20, 'Lucas Pereira', '777.888.999-11', 'Rua P, 987', '2121-2121', 'lucas.pereira@gmail.com', 'CDE234567', '2025-07-15', 'Pessoa');
+(1, 'João Silva', '123.456.789-00', 'Rua A, 123', '1111-1111', 'joao@gmail.com', 'ABC123456', '2025-12-31', 'Pessoa Física'),
+(2, 'Maria Oliveira', '987.654.321-00', 'Rua B, 456', '2222-2222', 'maria@gmail.com', 'DEF654321', '2024-06-30', 'Pessoa Física'),
+(3, 'Pedro Santos', '456.789.123-00', 'Rua C, 789', '3333-3333', 'pedro@gmail.com', 'GHI789123', '2026-03-15', 'Pessoa Física'),
+(4, 'Ana Souza', '111.222.333-44', 'Av. X, 789', '4444-4444', 'ana@gmail.com', 'JKL987654', '2025-08-15', 'Pessoa Física'),
+(5, 'Carlos Ferreira', '222.333.444-55', 'Rua Y, 456', '5555-5555', 'carlos@gmail.com', 'MNO123456', '2024-11-30', 'Pessoa Física'),
+(6, 'Mariana Costa', '333.444.555-66', 'Rua Z, 321', '6666-6666', 'mariana@gmail.com', 'PQR789012', '2026-05-20', 'Pessoa Física'),
+(7, 'Rafaela Lima', '444.555.666-77', 'Av. W, 987', '7777-7777', 'rafaela@gmail.com', 'STU345678', '2023-09-10', 'Pessoa Física'),
+(8, 'Rodrigo Vieira', '555.666.777-88', 'Rua K, 654', '8888-8888', 'rodrigo@gmail.com', 'VWX901234', '2024-07-25', 'Pessoa Física'),
+(9, 'Camila Santos', '666.777.888-99', 'Av. M, 987', '9999-9999', 'camila@gmail.com', 'YZA567890', '2025-04-05', 'Pessoa Física'),
+(10, 'Fernanda Oliveira', '777.888.999-00', 'Rua D, 321', '1010-1010', 'fernanda@gmail.com', 'BCD234567', '2023-11-15', 'Pessoa Física'),
+(11, 'Gustavo Ferreira', '888.999.000-11', 'Av. E, 654', '1212-1212', 'gustavo@gmail.com', 'EFG345678', '2024-09-20', 'Pessoa Física'),
+(12, 'Lucas Souza', '999.000.111-22', 'Rua F, 987', '1313-1313', 'lucas@gmail.com', 'HIJ456789', '2025-06-30', 'Pessoa Física'),
+(13, 'Patrícia Lima', '000.111.222-33', 'Av. G, 456', '1414-1414', 'patricia@gmail.com', 'KLM567890', '2026-01-25', 'Pessoa Física'),
+(14, 'Renato Costa', '111.222.333-55', 'Rua H, 654', '1515-1515', 'renato@gmail.com', 'NOP678901', '2023-07-10', 'Pessoa Física'),
+(15, 'Sandra Vieira', '222.333.444-66', 'Av. I, 789', '1616-1616', 'sandra@gmail.com', 'QRS789012', '2024-04-15', 'Pessoa Física'),
+(16, 'Thiago Santos', '333.444.555-77', 'Rua J, 123', '1717-1717', 'thiago@gmail.com', 'TUV890123', '2025-09-05', 'Pessoa Física'),
+(17, 'Vanessa Oliveira', '444.555.666-88', 'Av. L, 987', '1818-1818', 'vanessa@gmail.com', 'WXY901234', '2026-02-20', 'Pessoa Física'),
+(18, 'Roberto Silva', '555.666.777-99', 'Rua N, 321', '1919-1919', 'roberto@gmail.com', 'YZA012345', '2023-12-01', 'Pessoa Física'),
+(19, 'Carolina Souza', '666.777.888-00', 'Av. O, 654', '2020-2020', 'carolina@gmail.com', 'BCD123456', '2024-10-10', 'Pessoa Física'),
+(20, 'Lucas Pereira', '777.888.999-11', 'Rua P, 987', '2121-2121', 'lucas.pereira@gmail.com', 'CDE234567', '2025-07-15', 'Pessoa Física');
+
 
 
 INSERT INTO `alugueis` (`id_aluguel`, `id_funcionario`, `data_inicio`, `data_fim`, `valor_km`,`id_cliente`) VALUES
