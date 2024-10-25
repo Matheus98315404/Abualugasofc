@@ -1,13 +1,56 @@
 <?php
-if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionados'])) {
-    $alugueis_selecionados = $_POST['alugueis_selecionados'];
-    ?>
+require_once 'conexao.php';
 
+if (isset($_POST['alugueis_selecionados']) && count($_POST['alugueis_selecionados']) > 0) {
+    $id_aluguel = $_POST['alugueis_selecionados'][0];
+
+    // Consulta para obter as informações do aluguel selecionado
+    $sql_aluguel = "
+        SELECT av.km_inicial, a.valor_km, v.modelo AS modelo_veiculo
+        FROM alugueis_veiculos av
+        JOIN alugueis a ON av.alugueis_id_aluguel = a.id_aluguel
+        JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
+        WHERE a.id_aluguel = ?";
+
+    $stmt_aluguel = $conexao->prepare($sql_aluguel);
+    $stmt_aluguel->bind_param("i", $id_aluguel);
+    $stmt_aluguel->execute();
+    $result_aluguel = $stmt_aluguel->get_result();
+
+    if ($row_aluguel = $result_aluguel->fetch_assoc()) {
+        $km_inicial = $row_aluguel['km_inicial'];
+        $valor_km = $row_aluguel['valor_km'];
+        $modelo_veiculo = $row_aluguel['modelo_veiculo'];
+    } else {
+        echo "Aluguel não encontrado.";
+        exit;
+    }
+} else {
+    echo "Nenhum aluguel selecionado.";
+    exit;
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informar Km Final</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             padding: 20px;
+        }
+
+        .container {
+            width: 50%;
+            background-color: #fff;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -16,121 +59,62 @@ if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionad
         }
 
         form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
             margin-bottom: 20px;
         }
 
-        table th, table td {
+        input[type="number"], button {
+            display: block;
+            width: 100%;
             padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        table th {
-            background-color: #f8f8f8;
-        }
-
-        input[type="number"], input[type="date"], select {
-            width: calc(100% - 20px);
-            padding: 8px;
-            margin: 8px 0;
+            margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="number"]:focus, button:focus {
+            border-color: #28a745;
+            outline: none;
         }
 
         button {
             background-color: #28a745;
             color: white;
-            padding: 10px 20px;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
-            display: block;
-            width: 100%;
+            padding: 12px;
         }
 
         button:hover {
             background-color: #218838;
         }
 
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .form-section {
-            margin-bottom: 20px;
+        p {
+            text-align: center;
+            font-size: 16px;
         }
     </style>
-
-    <form method="POST" action="processar_pagamento.php">
-        <h1>Informe a Quilometragem Final</h1>
-        <input type="hidden" name="alugueis_selecionados[]" value="<?php echo implode('", "',$alugueis_selecionados); ?>">
-
-        <table>
-            <tr>
-                <th>ID Aluguel</th>
-                <th>Modelo do Veículo</th>
-                <th>Km Final</th>
-            </tr>
-            <?php
-            require_once 'conexao.php';
-
-            foreach ($alugueis_selecionados as $id_aluguel):
-                $sql = "SELECT v.modelo FROM alugueis_veiculos av
-                        JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
-                        WHERE av.alugueis_id_aluguel = ?";
-                $stmt = $conexao->prepare($sql);
-                $stmt->bind_param("i", $id_aluguel);
-                $stmt->execute();
-                $result = $stmt->get_result();
-
-                $modelo_veiculo = '';
-                if ($row = $result->fetch_assoc()) {
-                    $modelo_veiculo = htmlspecialchars($row['modelo']);
-                }
-
-                $stmt->close();
-            ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($id_aluguel); ?></td>
-                    <td><?php echo $modelo_veiculo; ?></td>
-                    <td>
-                        <input type="number" name="km_final[<?php echo $id_aluguel; ?>]" required placeholder="Km Final">
-                    </td>
-                </tr>
-                
-            <?php endforeach; ?>
-        </table>
-
+</head>
+<body>
+    <div class="container">
+        <h1>Informar Km Final</h1>
+        <p>Veículo: <?php echo htmlspecialchars($modelo_veiculo); ?></p>
+        <p>Km Inicial: <?php echo htmlspecialchars($km_inicial); ?></p>
+        <p>Valor por Km: R$ <?php echo number_format($valor_km, 2, ',', '.'); ?></p>
         
+        <form method="POST" action="calcular_valor.php">
+            <input type="hidden" name="id_aluguel" value="<?php echo $id_aluguel; ?>">
+            <input type="hidden" name="km_inicial" value="<?php echo $km_inicial; ?>">
+            <input type="hidden" name="valor_km" value="<?php echo $valor_km; ?>">
+            <label for="km_final">Informe o Km Final:</label>
+            <input type="number" name="km_final" id="km_final" required min="<?php echo $km_inicial; ?>">
+            <button type="submit">Calcular Valor</button>
+        </form>
+    </div>
+</body>
+</html>
 
-        <div class="form-section">
-            <label for="metodo_pagamento">Método de Pagamento:</label>
-            <select name="metodo_pagamento" required>
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="Cartao">Cartão</option>
-                <option value="Pix">Pix</option>
-                <option value="Outro">Outro</option>
-            </select>
-        </div>
-
-        <button type="submit">Processar Pagamento</button>
-    </form>
-
-    <?php
-} else {
-    echo "<p style='text-align:center; font-size:18px;'>Nenhum aluguel selecionado.</p>";
-}
+<?php
+$stmt_aluguel->close();
+$conexao->close();
 ?>
