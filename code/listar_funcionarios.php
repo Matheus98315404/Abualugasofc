@@ -101,7 +101,7 @@
     </div>
 
     <footer class="footer text-center">
-        <p>© 2024 Abualugas - Todos os direitos reservados</p>
+    <p>© 2024 Carromeu e Julieta - Todos os direitos reservados</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
