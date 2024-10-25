@@ -36,7 +36,7 @@ function listarClientes($conexao)
 
     mysqli_stmt_execute($stmt);
 
-    mysqli_stmt_bind_result($stmt, $id_cliente, $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira);
+    mysqli_stmt_bind_result($stmt, $id_cliente, $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira, $fisico_juridico);
 
     mysqli_stmt_store_result($stmt);
 
