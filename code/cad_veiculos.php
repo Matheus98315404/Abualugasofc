@@ -9,7 +9,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $placa = $_POST['placa'];
     $cor = $_POST['cor'];
     $km_atual = $_POST['km_atual'];
-    $tipo = $_POST['tipo'];
     $airbag = isset($_POST['airbag']) ? 1 : 0;
     $num_bancos = $_POST['num_bancos'];
     $num_portas = $_POST['num_portas'];
@@ -25,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $disponivel = isset($_POST['disponivel']) ? 1 : 0;
 
 
-    $sql = "INSERT INTO veiculos (modelo, marca, ano, placa, cor, km_atual, tipo, airbag, num_bancos, num_portas, combustivel, cambio, ar_condicionado, direcao, som, bluetooth, gps, sensor_estacionamento, camera_re, disponivel)
-            VALUES ('$modelo', '$marca', '$ano', '$placa', '$cor', '$km_atual', '$tipo', '$airbag', '$num_bancos', '$num_portas', '$combustivel', '$cambio', '$ar_condicionado', '$direcao', '$som', '$bluetooth', '$gps', '$sensor_estacionamento', '$camera_re', '$disponivel')";
+    $sql = "INSERT INTO veiculos (modelo, marca, ano, placa, cor, km_atual, airbag, num_bancos, num_portas, combustivel, cambio, ar_condicionado, direcao, som, bluetooth, gps, sensor_estacionamento, camera_re, disponivel)
+            VALUES ('$modelo', '$marca', '$ano', '$placa', '$cor', '$km_atual', '$airbag', '$num_bancos', '$num_portas', '$combustivel', '$cambio', '$ar_condicionado', '$direcao', '$som', '$bluetooth', '$gps', '$sensor_estacionamento', '$camera_re', '$disponivel')";
 
 }    mysqli_query($conexao, $sql);
 
