@@ -7,17 +7,14 @@ if (isset($_POST['id_aluguel'], $_POST['km_inicial'], $_POST['km_final'], $_POST
     $km_final = $_POST['km_final'];
     $valor_km = $_POST['valor_km'];
 
-    // Validação básica
     if ($km_final < $km_inicial) {
         echo "Km final não pode ser menor que o Km inicial.";
         exit;
     }
 
-    // Cálculo do valor total
     $km_rodados = $km_final - $km_inicial;
     $valor_total = $km_rodados * $valor_km;
 
-    // Exibição do resultado
     echo "<h1>Resumo do Pagamento</h1>";
     echo "<p>Km Inicial: $km_inicial</p>";
     echo "<p>Km Final: $km_final</p>";
