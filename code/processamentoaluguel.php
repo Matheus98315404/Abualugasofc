@@ -1,6 +1,13 @@
 <?php
 require_once 'conexao.php';
 
+/**
+ * Obtém a quilometragem inicial de um veículo.
+ *
+ * @param mysqli $conexao Conexão ativa com o banco de dados.
+ * @param int $id_veiculo ID do veículo.
+ * @return int|null Quilometragem inicial do veículo ou null se não encontrada.
+ */
 function kmInicialVeiculo($conexao, $id_veiculo) {
     $sql = "SELECT km_atual FROM veiculos WHERE id_veiculo = ?";
     $stmt = mysqli_prepare($conexao, $sql);
@@ -17,6 +24,17 @@ function kmInicialVeiculo($conexao, $id_veiculo) {
     return $km_inicial !== null ? $km_inicial : null;
 }
 
+/**
+ * Salva um novo empréstimo no banco de dados.
+ *
+ * @param mysqli $conexao Conexão ativa com o banco de dados.
+ * @param int $idfuncionario ID do funcionário.
+ * @param int $idcliente ID do cliente.
+ * @param string $data_inicio Data de início do aluguel.
+ * @param string $data_fim Data de fim do aluguel.
+ * @param float $valor_km Valor por quilômetro.
+ * @return int ID do empréstimo inserido.
+ */
 function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $data_fim, $valor_km) {
     $sql = "INSERT INTO alugueis (id_funcionario, id_cliente, data_inicio, data_fim, valor_km) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($conexao, $sql);
@@ -32,6 +50,13 @@ function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $d
     return $id;
 }
 
+/**
+ * Salva a relação de um veículo com um empréstimo no banco de dados.
+ *
+ * @param mysqli $conexao Conexão ativa com o banco de dados.
+ * @param int $id_aluguel ID do aluguel.
+ * @param int $id_veiculo ID do veículo.
+ */
 function salvarVeiculoEmprestimo($conexao, $id_aluguel, $id_veiculo) {
     $km_inicial = kmInicialVeiculo($conexao, $id_veiculo);
     if ($km_inicial === null) {
