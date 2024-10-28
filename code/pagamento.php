@@ -116,6 +116,9 @@ if (isset($_POST['id_cliente'])) {
     </style>
 </head>
 <body>
+
+
+
     <div class="container">
         <h1>Selecionar Cliente para Pagamento de Empréstimo</h1>
         <form method="POST" action="">
@@ -136,25 +139,27 @@ if (isset($_POST['id_cliente'])) {
 
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <h2>Veículos Alugados</h2>
+            
             <form method="POST" action="informar_km_final.php">
-                <table>
-                    <tr>
-                        <th>Selecionar</th>
-                        <th>Modelo do Veículo</th>
-                        <th>Km Inicial</th>
-                    </tr>
-                    <?php while ($row = $result->fetch_assoc()): ?>
-                        <tr>
-                            <td>
-                                <input type="radio" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>">
-                            </td>
-                            <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
-                            <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </table>
-                <button type="submit">Informar Km Final</button>
-            </form>
+    <table>
+        <tr>
+            <th>Selecionar</th>
+            <th>Modelo do Veículo</th>
+            <th>Km Inicial</th>
+        </tr>
+        <?php while ($row = $result->fetch_assoc()): ?>
+            <tr>
+                <td>
+                    <input type="radio" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>" required>
+                </td>
+                <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
+                <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
+    <button type="submit">Informar Km Final</button>
+</form>
+
         <?php elseif (isset($result)): ?>
             <p>Nenhum aluguel encontrado para o cliente selecionado.</p>
         <?php endif; ?>
@@ -172,3 +177,6 @@ if (isset($stmt_nome_cliente)) {
 }
 $conexao->close();
 ?>
+
+
+
