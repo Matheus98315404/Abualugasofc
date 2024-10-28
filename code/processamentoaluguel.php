@@ -6,7 +6,7 @@ require_once 'conexao.php';
  *
  * @param mysqli $conexao Conexão ativa com o banco de dados.
  * @param int $id_veiculo ID do veículo.
- * @return int|null Quilometragem inicial do veículo ou null se não encontrada.
+ * @return int|null       Quilometragem inicial do veículo ou null se não encontrada.
  */
 function kmInicialVeiculo($conexao, $id_veiculo) {
     $sql = "SELECT km_atual FROM veiculos WHERE id_veiculo = ?";
@@ -27,13 +27,13 @@ function kmInicialVeiculo($conexao, $id_veiculo) {
 /**
  * Salva um novo empréstimo no banco de dados.
  *
- * @param mysqli $conexao Conexão ativa com o banco de dados.
- * @param int $idfuncionario ID do funcionário.
- * @param int $idcliente ID do cliente.
- * @param string $data_inicio Data de início do aluguel.
- * @param string $data_fim Data de fim do aluguel.
- * @param float $valor_km Valor por quilômetro.
- * @return int ID do empréstimo inserido.
+ * @param mysqli $conexao       Conexão ativa com o banco de dados.
+ * @param int $idfuncionario    ID do funcionário.
+ * @param int $idcliente        ID do cliente.
+ * @param string $data_inicio   Data de início do aluguel.
+ * @param string $data_fim      Data de fim do aluguel.
+ * @param float $valor_km       Valor por quilômetro.
+ * @return int                  ID do empréstimo inserido.
  */
 function salvarEmprestimo($conexao, $idfuncionario, $idcliente, $data_inicio, $data_fim, $valor_km) {
     $sql = "INSERT INTO alugueis (id_funcionario, id_cliente, data_inicio, data_fim, valor_km) VALUES (?, ?, ?, ?, ?)";

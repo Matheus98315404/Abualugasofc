@@ -1,6 +1,13 @@
 <?php
 require_once 'conexao.php'; 
 
+/**
+ * Processa o pagamento dos alugueis selecionados.
+ * 
+ * @param array $alugueis_selecionados IDs dos alugueis selecionados.
+ * @param array $km_final              Quilometragem final dos veículos.
+ * @param string $metodo_pagamento     Método de pagamento escolhido.
+ */
 if (isset($_POST['alugueis_selecionados']) && !empty($_POST['alugueis_selecionados']) && isset($_POST['km_final']) && isset($_POST['metodo_pagamento'])) {
     $alugueis_selecionados = $_POST['alugueis_selecionados'];
     $km_final = $_POST['km_final'];
