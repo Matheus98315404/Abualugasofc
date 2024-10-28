@@ -59,7 +59,7 @@ function listarFuncionarios($conexao)
 
     mysqli_stmt_execute($stmt);
 
-    mysqli_stmt_bind_result($stmt, $id_funcionario, $nome, $cpf, $telefone, $email);
+    mysqli_stmt_bind_result($stmt, $id_funcionario, $nome, $cpf, $telefone, $email, $senha);
 
     mysqli_stmt_store_result($stmt);
 
