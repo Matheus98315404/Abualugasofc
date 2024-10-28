@@ -70,7 +70,6 @@
                     <th>Placa</th>
                     <th>Cor</th>
                     <th>Km atual</th>
-                    <th>Tipo</th>
                     <th>Disponibilidade/Data do aluguel</th>
                     <th>Ações</th>
                 </tr>
@@ -131,7 +130,6 @@
                     echo "<td>$modelo[4]</td>";  // Placa
                     echo "<td>$modelo[5]</td>";  // Cor
                     echo "<td>$modelo[6]</td>";  // Km atual
-                    echo "<td>$modelo[7]</td>";  // Tipo
                     echo "<td>$dataAluguel</td>";  // Última data de aluguel
                     echo "<td>
                             <a href='editar.php?id=$id_veiculo' class='btn btn-warning btn-sm'>Editar</a>
