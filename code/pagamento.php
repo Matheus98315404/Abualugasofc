@@ -150,7 +150,7 @@ if (isset($_POST['id_cliente'])) {
         <?php while ($row = $result->fetch_assoc()): ?>
             <tr>
                 <td>
-                    <input type="radio" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>" required>
+                    <input type="checkbox" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>" required>
                 </td>
                 <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
                 <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
