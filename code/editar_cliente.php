@@ -1,6 +1,78 @@
 <?php
 require_once "conexao.php";
 
+/**
+ * Função para editar as informações de um cliente.
+ *
+ * Esta função recebe os dados do formulário para editar as informações de um cliente na base de dados.
+ * Quando o formulário é enviado, as informações do cliente são atualizadas no banco de dados com base no ID do cliente.
+ *
+ * @param mysqli    $conexao                Conexão com o banco de dados.
+ * @param int       $id                     ID do cliente a ser editado.
+ * @param string    $nome                   Nome do cliente.
+ * @param string    $cpf_cnpj               CPF ou CNPJ do cliente.
+ * @param string    $endereco               Endereço do cliente.
+ * @param string    $telefone               Telefone do cliente.
+ * @param string    $email                  E-mail do cliente.
+ * @param string    $carteira_motorista     Número da carteira de motorista do cliente.
+ * @param string    $validade_carteira      Data de validade da carteira de motorista do cliente.
+ * @return void
+ */
+function editarCliente($conexao, $id, $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira) {
+    // Prepara a consulta SQL para atualizar os dados do cliente.
+    $sql = "UPDATE clientes SET nome = ?, cpf_cnpj = ?, endereco = ?, telefone = ?, email = ?, carteira_motorista = ?, validade_carteira = ? WHERE id_cliente = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    
+    // Verifica se a preparação da consulta foi bem-sucedida.
+    if (!$stmt) {
+        die('Erro na preparação da consulta: ' . mysqli_error($conexao));
+    }
+    
+    // Liga os parâmetros e executa a consulta.
+    mysqli_stmt_bind_param($stmt, "sssssssi", $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira, $id);
+    mysqli_stmt_execute($stmt);
+    
+    // Fecha o statement.
+    mysqli_stmt_close($stmt);
+}
+
+/**
+ * Função para carregar as informações de um cliente baseado no ID.
+ *
+ * Esta função retorna as informações de um cliente específico a partir de seu ID. Ela é usada para preencher os campos do formulário de edição.
+ *
+ * @param mysqli $conexao   Conexão com o banco de dados.
+ * @param int    $id        ID do cliente a ser carregado.
+ * @return array|false      Retorna um array com os dados do cliente ou false em caso de erro.
+ */
+function carregarCliente($conexao, $id) {
+    // Prepara a consulta SQL para obter os dados do cliente.
+    $sql = "SELECT * FROM clientes WHERE id_cliente = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    
+    // Verifica se a preparação da consulta foi bem-sucedida.
+    if (!$stmt) {
+        die('Erro na preparação da consulta: ' . mysqli_error($conexao));
+    }
+    
+    // Liga o parâmetro e executa a consulta.
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    
+    // Faz o fetch dos dados do cliente.
+    $result = mysqli_stmt_get_result($stmt);
+    
+    // Verifica se foi encontrado algum cliente com o ID fornecido.
+    if ($row = mysqli_fetch_assoc($result)) {
+        mysqli_stmt_close($stmt);
+        return $row; // Retorna os dados do cliente.
+    } else {
+        mysqli_stmt_close($stmt);
+        return false; // Retorna false caso não encontre o cliente.
+    }
+}
+
+// Verifica se o ID foi passado na URL para edição.
 if (!isset($_GET['id'])) {
     header("Location: listar_clientes.php");
     exit();
@@ -8,6 +80,7 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
+// Processa o formulário de edição.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $cpf_cnpj = $_POST['cpf_cnpj'];
@@ -17,23 +90,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $carteira_motorista = $_POST['carteira_motorista'];
     $validade_carteira = $_POST['validade_carteira'];
 
-    $sql = "UPDATE clientes SET nome = ?, cpf_cnpj = ?, endereco = ?, telefone = ?, email = ?, carteira_motorista = ?, validade_carteira = ? WHERE id_cliente = ?";
-    $stmt = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($stmt, "sssssssi", $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira, $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    // Chama a função para editar o cliente.
+    editarCliente($conexao, $id, $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira);
 
+    // Redireciona de volta para a lista de clientes após a edição.
     header("Location: listar_clientes.php");
     exit();
-}
+} else {
+    // Carrega os dados do cliente para preencher o formulário de edição.
+    $cliente = carregarCliente($conexao, $id);
+    
+    // Se o cliente não for encontrado, redireciona para a lista de clientes.
+    if (!$cliente) {
+        header("Location: listar_clientes.php");
+        exit();
+    }
 
-$sql = "SELECT * FROM clientes WHERE id_cliente = ?";
-$stmt = mysqli_prepare($conexao, $sql);
-mysqli_stmt_bind_param($stmt, "i", $id);
-mysqli_stmt_execute($stmt);
-mysqli_stmt_bind_result($stmt, $id_cliente, $nome, $cpf_cnpj, $endereco, $telefone, $email, $carteira_motorista, $validade_carteira);
-mysqli_stmt_fetch($stmt);
-mysqli_stmt_close($stmt);
+    // Extrai os dados do cliente para preencher os campos do formulário.
+    $nome = $cliente['nome'];
+    $cpf_cnpj = $cliente['cpf_cnpj'];
+    $endereco = $cliente['endereco'];
+    $telefone = $cliente['telefone'];
+    $email = $cliente['email'];
+    $carteira_motorista = $cliente['carteira_motorista'];
+    $validade_carteira = $cliente['validade_carteira'];
+}
 ?>
 
 <!DOCTYPE html>

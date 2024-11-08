@@ -1,4 +1,15 @@
 <?php
+
+    /**
+     * Função para excluir os pagamentos associados a um aluguel.
+     * 
+     * @param mysqli    $conexao    Conexão com o banco de dados.
+     * @param int       $id_aluguel ID do aluguel a ser excluído.
+     * @return bool                 Retorna true se a exclusão foi bem-sucedida, caso contrário retorna false.
+     */
+
+
+
 require_once 'conexao.php'; 
 
 $status_message = "";

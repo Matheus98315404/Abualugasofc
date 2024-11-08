@@ -1,6 +1,75 @@
 <?php
 require_once "conexao.php";
 
+/**
+ * Função para editar as informações de um funcionário.
+ *
+ * Esta função recebe os dados do formulário para editar as informações de um funcionário na base de dados.
+ * Quando o formulário é enviado, as informações do funcionário são atualizadas no banco de dados com base no ID do funcionário.
+ *
+ * @param mysqli    $conexao    Conexão com o banco de dados.
+ * @param int       $id         ID do funcionário a ser editado.
+ * @param string    $nome       Nome do funcionário.
+ * @param string    $cpf        CPF do funcionário.
+ * @param string    $telefone   Telefone do funcionário.
+ * @param string    $email      E-mail do funcionário.
+ * @return void
+ */
+function editarFuncionario($conexao, $id, $nome, $cpf, $telefone, $email) {
+    // Prepara a consulta SQL para atualizar os dados do funcionário.
+    $sql = "UPDATE funcionarios SET nome = ?, cpf = ?, telefone = ?, email = ? WHERE id_funcionario = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    
+    // Verifica se a preparação da consulta foi bem-sucedida.
+    if (!$stmt) {
+        die('Erro na preparação da consulta: ' . mysqli_error($conexao));
+    }
+    
+    // Liga os parâmetros e executa a consulta.
+    mysqli_stmt_bind_param($stmt, "ssssi", $nome, $cpf, $telefone, $email, $id);
+    mysqli_stmt_execute($stmt);
+    
+    // Fecha o statement.
+    mysqli_stmt_close($stmt);
+}
+
+/**
+ * Função para carregar as informações de um funcionário baseado no ID.
+ *
+ * Esta função retorna as informações de um funcionário específico a partir de seu ID. Ela é usada para preencher os campos do formulário de edição.
+ *
+ * @param mysqli $conexao   Conexão com o banco de dados.
+ * @param int    $id        ID do funcionário a ser carregado.
+ * @return array|false      Retorna um array com os dados do funcionário ou false em caso de erro.
+ */
+function carregarFuncionario($conexao, $id) {
+    // Prepara a consulta SQL para obter os dados do funcionário.
+    $sql = "SELECT * FROM funcionarios WHERE id_funcionario = ?";
+    $stmt = mysqli_prepare($conexao, $sql);
+    
+    // Verifica se a preparação da consulta foi bem-sucedida.
+    if (!$stmt) {
+        die('Erro na preparação da consulta: ' . mysqli_error($conexao));
+    }
+    
+    // Liga o parâmetro e executa a consulta.
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    
+    // Faz o fetch dos dados do funcionário.
+    $result = mysqli_stmt_get_result($stmt);
+    
+    // Verifica se foi encontrado algum funcionário com o ID fornecido.
+    if ($row = mysqli_fetch_assoc($result)) {
+        mysqli_stmt_close($stmt);
+        return $row; // Retorna os dados do funcionário.
+    } else {
+        mysqli_stmt_close($stmt);
+        return false; // Retorna false caso não encontre o funcionário.
+    }
+}
+
+// Verifica se o ID foi passado na URL para edição.
 if (!isset($_GET['id'])) {
     header("Location: listar_funcionarios.php");
     exit();
@@ -8,28 +77,34 @@ if (!isset($_GET['id'])) {
 
 $id = $_GET['id'];
 
+// Processa o formulário de edição.
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = $_POST['nome'];
     $cpf = $_POST['cpf'];
     $telefone = $_POST['telefone'];
     $email = $_POST['email'];
 
-    $sql = "UPDATE funcionarios SET nome = ?, cpf = ?, telefone = ?, email = ? WHERE id_funcionario = ?";
-    $stmt = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($stmt, "ssssi", $nome, $cpf, $telefone, $email, $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
+    // Chama a função para editar o funcionário.
+    editarFuncionario($conexao, $id, $nome, $cpf, $telefone, $email);
 
+    // Redireciona de volta para a lista de funcionários após a edição.
     header("Location: listar_funcionarios.php");
     exit();
 } else {
-    $sql = "SELECT * FROM funcionarios WHERE id_funcionario = ?";
-    $stmt = mysqli_prepare($conexao, $sql);
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $id_funcionario, $nome, $cpf, $telefone, $email);
-    mysqli_stmt_fetch($stmt);
-    mysqli_stmt_close($stmt);
+    // Carrega os dados do funcionário para preencher o formulário de edição.
+    $funcionario = carregarFuncionario($conexao, $id);
+    
+    // Se o funcionário não for encontrado, redireciona para a lista de funcionários.
+    if (!$funcionario) {
+        header("Location: listar_funcionarios.php");
+        exit();
+    }
+
+    // Extrai os dados do funcionário para preencher os campos do formulário.
+    $nome = $funcionario['nome'];
+    $cpf = $funcionario['cpf'];
+    $telefone = $funcionario['telefone'];
+    $email = $funcionario['email'];
 }
 ?>
 

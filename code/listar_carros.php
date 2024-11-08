@@ -45,7 +45,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Carromeu e julieta</a>
+            <a class="navbar-brand" href="index.html">Carromeu e Julieta</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -78,7 +78,13 @@
                 require_once "conexao.php";
                 require_once "core.php";
 
-                // Função para pegar a última data de aluguel de um veículo
+                /**
+                 * Função para pegar a última data de aluguel de um veículo.
+                 *
+                 * @param mysqli    $conexao    Conexão com o banco de dados.
+                 * @param int       $id_veiculo ID do veículo.
+                 * @return string               Disponibilidade ou data de aluguel do veículo.
+                 */
                 function ultimaDataAluguel($conexao, $id_veiculo) {
                     // Consulta para obter o último aluguel e verificar se ainda está em andamento
                     $sql = "SELECT a.data_inicio, a.data_fim
@@ -108,14 +114,11 @@
                         return "Disponível";  // Caso o veículo nunca tenha sido alugado
                     }
                 }
-                
 
                 $resultados = listarCarros($conexao);
 
                 foreach ($resultados as $modelo) {
                     $id_veiculo = $modelo[0];
-
-                    // Verificar se o veículo está disponível (0 = Não, 1 = Sim)
 
                     // Pegar a última data de aluguel (se houver)
                     $ultimaData = ultimaDataAluguel($conexao, $id_veiculo);
@@ -123,12 +126,12 @@
 
                     echo "<tr>";
                     echo "<td>$id_veiculo</td>";
-                    echo "<td>$modelo[1]</td>";  // Modelo
-                    echo "<td>$modelo[2]</td>";  // Marca
-                    echo "<td>$modelo[3]</td>";  // Ano
-                    echo "<td>$modelo[4]</td>";  // Placa
-                    echo "<td>$modelo[5]</td>";  // Cor
-                    echo "<td>$modelo[6]</td>";  // Km atual
+                    echo "<td>" . htmlspecialchars($modelo[1]) . "</td>";  // Modelo
+                    echo "<td>" . htmlspecialchars($modelo[2]) . "</td>";  // Marca
+                    echo "<td>" . htmlspecialchars($modelo[3]) . "</td>";  // Ano
+                    echo "<td>" . htmlspecialchars($modelo[4]) . "</td>";  // Placa
+                    echo "<td>" . htmlspecialchars($modelo[5]) . "</td>";  // Cor
+                    echo "<td>" . htmlspecialchars($modelo[6]) . "</td>";  // Km atual
                     echo "<td>$dataAluguel</td>";  // Última data de aluguel
                     echo "<td>
                             <a href='editar.php?id=$id_veiculo' class='btn btn-warning btn-sm'>Editar</a>

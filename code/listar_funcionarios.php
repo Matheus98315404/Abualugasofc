@@ -1,10 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Funcionários - Bootstrap</title>
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lista de Funcionários - Bootstrap</title>
+    <!-- Inclui o Bootstrap 5.3.0 para o estilo e layout -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -39,26 +41,29 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-    </style>
+        </style>
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
+    <!-- Barra de navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.html">Carromeu e julieta</a>
+            <a class="navbar-brand" href="index.html">Carromeu e Julieta</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+        
+        <!-- Contêiner da Tabela de Funcionários -->
+        <div class="container mt-5 table-container">
+            <h1 class="text-center mb-4">Lista de Funcionários</h1>
 
-    <div class="container mt-5 table-container">
-        <h1 class="text-center mb-4">Lista de Funcionários</h1>
-
+        <!-- Tabela com os dados dos funcionários -->
         <table class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
@@ -72,11 +77,23 @@
             </thead>
             <tbody>
                 <?php
+                /**
+                 * Exibe uma lista de funcionários com suas informações detalhadas, utilizando a estrutura HTML com o Bootstrap.
+                 * 
+                 * A página inclui uma barra de navegação, uma tabela com os dados dos funcionários (ID, Nome, CPF, Telefone, E-mail)
+                 * e botões de ação para editar ou excluir funcionários. Além disso, a página é responsiva e contém um rodapé com informações de copyright.
+                 *
+                 * @param void
+                 * @return void
+                 */
+                // Requer arquivos para conexão ao banco de dados e funções do core
                 require_once "conexao.php";
                 require_once "core.php";
 
+                // Obtém a lista de funcionários da base de dados
                 $resultados = listarFuncionarios($conexao);
 
+                // Exibe cada funcionário na tabela
                 foreach ($resultados as $funcionario) {
                     $id_funcionario = $funcionario[0];
                     echo "<tr>";
@@ -95,15 +112,18 @@
             </tbody>
         </table>
 
+        <!-- Botão para voltar à página inicial -->
         <div class="text-center mt-4">
             <a href="index.html" class="btn btn-primary"><< Página inicial</a><br><br>
         </div>
     </div>
 
+    <!-- Rodapé -->
     <footer class="footer text-center">
-    <p>© 2024 Carromeu e Julieta - Todos os direitos reservados</p>
+        <p>© 2024 Carromeu e Julieta - Todos os direitos reservados</p>
     </footer>
 
+    <!-- Scripts necessários para o funcionamento do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

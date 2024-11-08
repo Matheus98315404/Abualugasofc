@@ -75,22 +75,36 @@
             </thead>
             <tbody>
                 <?php
+                /**
+                 * Exibe uma lista de clientes cadastrados, mostrando informações como ID, Nome, CPF/CNPJ, Endereço, Telefone,
+                 * E-mail, Carteira de Motorista e Validade da Carteira, com opções para editar ou excluir cada cliente.
+                 * 
+                 * A página utiliza o framework Bootstrap para responsividade e estilo. A tabela é preenchida com dados dinâmicos
+                 * extraídos de um banco de dados via PHP.
+                 * 
+                 * @param void
+                 * @return void
+                 */
+
+                // Requer arquivos para conexão ao banco de dados e funções de manipulação de dados
                 require_once "conexao.php";
                 require_once "core.php";
 
+                // Obtém a lista de clientes da base de dados
                 $resultados = listarClientes($conexao);
 
+                // Exibe cada cliente na tabela
                 foreach ($resultados as $cliente) {
                     $id_cliente = $cliente[0];
                     echo "<tr>";
                     echo "<td>$id_cliente</td>";
-                    echo "<td>$cliente[1]</td>";
-                    echo "<td>$cliente[2]</td>";
-                    echo "<td>$cliente[3]</td>";
-                    echo "<td>$cliente[4]</td>";
-                    echo "<td>$cliente[5]</td>";
-                    echo "<td>$cliente[6]</td>";
-                    echo "<td>$cliente[7]</td>";
+                    echo "<td>" . htmlspecialchars($cliente[1]) . "</td>";
+                    echo "<td>" . htmlspecialchars($cliente[2]) . "</td>";
+                    echo "<td>" . htmlspecialchars($cliente[3]) . "</td>";
+                    echo "<td>" . htmlspecialchars($cliente[4]) . "</td>";
+                    echo "<td>" . htmlspecialchars($cliente[5]) . "</td>";
+                    echo "<td>" . htmlspecialchars($cliente[6]) . "</td>";
+                    echo "<td>" . htmlspecialchars($cliente[7]) . "</td>";
                     echo "<td>
                             <a href='editar_cliente.php?id=$id_cliente' class='btn btn-warning btn-sm'>Editar</a>
                             <a href='excluir_cliente.php?id=$id_cliente' class='btn btn-danger btn-sm'>Excluir</a>
