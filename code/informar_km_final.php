@@ -12,8 +12,16 @@ if (isset($_POST['aluguel_selecionado'])) {
         JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
         WHERE a.id_aluguel = ?";
 
+
+
+        if (isset($_POST['aluguel_selecionado'])) {
+            $veiculos_selecionados = $_POST['aluguel_selecionado'];
+            foreach ($veiculos_selecionados as $veiculos_id_veiculo) {
+            }
+        }
+        
     $stmt_aluguel = $conexao->prepare($sql_aluguel);
-    $stmt_aluguel->bind_param("i", $id_aluguel);
+    $stmt_aluguel->bind_param("i", $veiculos_id_veiculo);
     $stmt_aluguel->execute();
     $result_aluguel = $stmt_aluguel->get_result();
 
@@ -98,8 +106,8 @@ if (isset($_POST['aluguel_selecionado'])) {
 <body>
     <div class="container">
         <h1>Informar Km Final</h1>
-        <p>Veículo: <?php echo htmlspecialchars($modelo_veiculo); ?></p>
-        <p>Km Inicial: <?php echo htmlspecialchars($km_inicial); ?></p>
+        <p>Veículo: <?php echo ($modelo_veiculo); ?></p>
+        <p>Km Inicial: <?php echo ($km_inicial); ?></p>
 
         <form method="POST" action="calcular_valor.php">
     <input type="hidden" name="id_aluguel" value="<?php echo $id_aluguel; ?>">
