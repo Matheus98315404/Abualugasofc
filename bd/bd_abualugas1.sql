@@ -157,27 +157,27 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`alugueis_veiculos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `cpf`, `telefone`, `email`) VALUES
-(1, 'Felipe Matos', '123.456.789-12', '4444-4445', 'felipe2@gmail.com'),
-(2, 'Gustavo Barbosa', '987.654.321-23', '5555-5556', 'gustavo2@gmail.com'),
-(3, 'Wellison Ferreira', '456.789.123-34', '6666-6667', 'wellison2@gmail.com'),
-(4, 'Joana Silva', '111.222.333-44', '7777-7777', 'joana@gmail.com'),
-(5, 'Pedro Santos', '555.666.777-88', '8888-8888', 'pedro@gmail.com'),
-(6, 'Ana Souza', '999.888.777-66', '9999-9999', 'ana@gmail.com'),
-(7, 'Marcos Oliveira', '333.444.555-99', '0000-0000', 'marcos@gmail.com'),
-(8, 'Carla Mendes', '777.888.999-11', '1111-1111', 'carla@gmail.com'),
-(9, 'Lucas Fernandes', '222.333.444-55', '2222-2222', 'lucas@gmail.com'),
-(10, 'Camila Costa', '666.777.888-22', '3333-3333', 'camila@gmail.com'),
-(11, 'Roberto Almeida', '444.555.666-77', '4444-4444', 'roberto@gmail.com'),
-(12, 'Amanda Silva', '888.999.111-00', '5555-5555', 'amanda@gmail.com'),
-(13, 'Rodrigo Santos', '222.333.555-88', '6666-6666', 'rodrigo@gmail.com'),
-(14, 'Renata Oliveira', '777.888.222-33', '7777-7877', 'renata@gmail.com'),
-(15, 'Eduardo Costa', '333.444.666-99', '8888-8878', 'eduardo@gmail.com'),
-(16, 'Sandra Lima', '555.666.888-11', '9999-9399', 'sandra@gmail.com'),
-(17, 'Rafaela Souza', '111.222.444-66', '1234-5678', 'rafaela@gmail.com'),
-(18, 'Bruno Martins', '999.888.777-22', '2345-6789', 'bruno@gmail.com'),
-(19, 'Isabela Ferreira', '444.555.999-33', '3456-7890', 'isabela@gmail.com'),
-(20, 'Paulo Rodrigues', '888.999.222-44', '4567-8901', 'paulo@gmail.com');
+INSERT INTO `funcionarios` (`id_funcionario`, `nome`, `cpf`, `telefone`, `email`, `senha`) VALUES
+(1, 'Felipe Matos', '123.456.789-12', '4444-4445', 'felipe2@gmail.com', 'senha123'),
+(2, 'Gustavo Barbosa', '987.654.321-23', '5555-5556', 'gustavo2@gmail.com', 'senha456'),
+(3, 'Wellison Ferreira', '456.789.123-34', '6666-6667', 'wellison2@gmail.com', 'senha789'),
+(4, 'Joana Silva', '111.222.333-44', '7777-7777', 'joana@gmail.com', 'senha101'),
+(5, 'Pedro Santos', '555.666.777-88', '8888-8888', 'pedro@gmail.com', 'senha102'),
+(6, 'Ana Souza', '999.888.777-66', '9999-9999', 'ana@gmail.com', 'senha103'),
+(7, 'Marcos Oliveira', '333.444.555-99', '0000-0000', 'marcos@gmail.com', 'senha104'),
+(8, 'Carla Mendes', '777.888.999-11', '1111-1111', 'carla@gmail.com', 'senha105'),
+(9, 'Lucas Fernandes', '222.333.444-55', '2222-2222', 'lucas@gmail.com', 'senha106'),
+(10, 'Camila Costa', '666.777.888-22', '3333-3333', 'camila@gmail.com', 'senha107'),
+(11, 'Roberto Almeida', '444.555.666-77', '4444-4444', 'roberto@gmail.com', 'senha108'),
+(12, 'Amanda Silva', '888.999.111-00', '5555-5555', 'amanda@gmail.com', 'senha109'),
+(13, 'Rodrigo Santos', '222.333.555-88', '6666-6666', 'rodrigo@gmail.com', 'senha110'),
+(14, 'Renata Oliveira', '777.888.222-33', '7777-7877', 'renata@gmail.com', 'senha111'),
+(15, 'Eduardo Costa', '333.444.666-99', '8888-8878', 'eduardo@gmail.com', 'senha112'),
+(16, 'Sandra Lima', '555.666.888-11', '9999-9399', 'sandra@gmail.com', 'senha113'),
+(17, 'Rafaela Souza', '111.222.444-66', '1234-5678', 'rafaela@gmail.com', 'senha114'),
+(18, 'Bruno Martins', '999.888.777-22', '2345-6789', 'bruno@gmail.com', 'senha115'),
+(19, 'Isabela Ferreira', '444.555.999-33', '3456-7890', 'isabela@gmail.com', 'senha116'),
+(20, 'Paulo Rodrigues', '888.999.222-44', '4567-8901', 'paulo@gmail.com', 'senha117');
 
 
 INSERT INTO `clientes` (`id_cliente`, `nome`, `cpf_cnpj`, `endereco`, `telefone`, `email`, `carteira_motorista`, `validade_carteira`, `fisico_juridico`) VALUES
