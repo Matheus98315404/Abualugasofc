@@ -1,3 +1,59 @@
+<?php
+require_once 'conexao.php'; 
+
+/**
+ * Obtém a lista de clientes ordenados por nome.
+ */
+$sql_clientes = "SELECT id_cliente, nome FROM clientes ORDER BY nome"; 
+$stmt_clientes = $conexao->prepare($sql_clientes);
+$stmt_clientes->execute();
+$result_clientes = $stmt_clientes->get_result();
+
+$id_cliente = null; 
+$nome_cliente = ""; 
+
+if (isset($_POST['id_cliente'])) {
+    $id_cliente = $_POST['id_cliente'];
+
+    /**
+     * Obtém o nome do cliente selecionado.
+     * 
+     * @param int $id_cliente ID do cliente selecionado.
+     */
+
+    $sql_nome_cliente = "SELECT nome FROM clientes WHERE id_cliente = ?";
+    $stmt_nome_cliente = $conexao->prepare($sql_nome_cliente);
+    $stmt_nome_cliente->bind_param("i", $id_cliente);
+    $stmt_nome_cliente->execute();
+    $result_nome_cliente = $stmt_nome_cliente->get_result();
+    
+    if ($row_nome_cliente = $result_nome_cliente->fetch_assoc()) {
+        $nome_cliente = $row_nome_cliente['nome'];
+    }
+
+    /**
+     * Obtém os aluguéis do cliente selecionado.
+     * 
+     * @param int $id_cliente ID do cliente selecionado.
+     */
+    
+    
+     $sql = "SELECT a.id_aluguel, v.modelo AS modelo_veiculo, av.km_atual, av.veiculos_id_veiculo
+        FROM alugueis a
+        JOIN alugueis_veiculos av ON a.id_aluguel = av.id_aluguel
+        JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
+        WHERE a.id_cliente = ?";
+
+    
+    $sql = "SELECT modelo, km_atual FROM veiculos WHERE id_veiculo = ?";
+    $stmt = $conexao->prepare($sql);
+    $stmt->bind_param("i", $id_cliente);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} 
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -49,32 +105,30 @@
                     <input type="text" id="id_cliente" name="id_cliente" class="form-control" required>
                 </div>
 
-                <div class="mb-3">
-                    <label for="id_aluguel" class="form-label">ID Aluguel:</label>
-                    <input type="text" id="id_aluguel" name="id_aluguel" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="km_final" class="form-label">Quilometragem Final:</label>
-                    <input type="number" id="km_final" name="km_final" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="metodo_pagamento" class="form-label">Método de Pagamento:</label>
-                    <select id="metodo_pagamento" name="metodo_pagamento" class="form-select" required>
-                        <option value="Dinheiro">Dinheiro</option>
-                        <option value="Cartao">Cartão</option>
-                        <option value="Pix">Pix</option>
-                        <option value="Outro">Outro</option>
-                    </select>
-                </div>
-
-                <div class="text-center">
-                    <button type="submit" name="submit" class="btn btn-custom">Pagar</button>
-                    <a href="index.html" class="btn btn-back ms-2">Voltar ao Início</a>
-                </div>
+        <?php if (isset($result) && $result->num_rows > 0): ?>
+            <h2>Veículos Alugados</h2>
+            <form method="POST" action="informar_km_final.php">
+                <table>
+                    <tr>
+                        <th>Selecionar</th>
+                        <th>Modelo do Veículo</th>
+                        <th>Km Inicial</th>
+                    </tr>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td>
+                                <input type="checkbox" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>">
+                            </td>
+                            <td><?php echo htmlspecialchars($row['modelo']); ?></td>
+                            <td><?php echo htmlspecialchars($row['km_atual']); ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </table>
+                <button type="submit">Informar Km Final</button>
             </form>
-        </div>
+        <?php elseif (isset($result)): ?>
+            <p>Nenhum aluguel encontrado para o cliente selecionado.</p>
+        <?php endif; ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
