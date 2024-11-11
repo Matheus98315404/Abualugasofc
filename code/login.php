@@ -29,5 +29,6 @@ if (!isset($_SESSION['funcionario_autenticado'])) {
     <h2>Bem-vindo ao painel de controle</h2>
     <p>Esta página é protegida e só pode ser acessada por funcionários autenticados.</p>
     <a href="logout.php">Sair</a>
+    
 </body>
 </html>
