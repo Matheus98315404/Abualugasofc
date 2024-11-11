@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `bd_abualugas`.`funcionarios` (
   `cpf` VARCHAR(20) NULL DEFAULT NULL,
   `telefone` VARCHAR(20) NULL DEFAULT NULL,
   `email` VARCHAR(100) NULL DEFAULT NULL,
+  `senha` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`id_funcionario`),
   UNIQUE INDEX `cpf` (`cpf` ASC) VISIBLE)
 ENGINE = InnoDB
