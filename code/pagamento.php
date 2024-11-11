@@ -38,13 +38,14 @@ if (isset($_POST['id_cliente'])) {
      */
     
     
-    $sql = "SELECT a.id_aluguel, v.modelo AS modelo_veiculo, av.km_inicial
-            FROM alugueis a
-            JOIN alugueis_veiculos av ON a.id_aluguel = av.alugueis_id_aluguel
-            JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
-            WHERE a.id_cliente = ?";
+     $sql = "SELECT a.id_aluguel, v.modelo AS modelo_veiculo, av.km_atual, av.veiculos_id_veiculo
+        FROM alugueis a
+        JOIN alugueis_veiculos av ON a.id_aluguel = av.id_aluguel
+        JOIN veiculos v ON av.veiculos_id_veiculo = v.id_veiculo
+        WHERE a.id_cliente = ?";
+
     
-    $sql = "SELECT modelo, km_inicial FROM veiculos WHERE id_veiculo = ?";
+    $sql = "SELECT modelo, km_atual FROM veiculos WHERE id_veiculo = ?";
     $stmt = $conexao->prepare($sql);
     $stmt->bind_param("i", $id_cliente);
     $stmt->execute();
@@ -145,7 +146,6 @@ if (isset($_POST['id_cliente'])) {
         <?php if (isset($result) && $result->num_rows > 0): ?>
             <h2>Veículos Alugados</h2>
             <form method="POST" action="informar_km_final.php">
-<<<<<<< Updated upstream
                 <table>
                     <tr>
                         <th>Selecionar</th>
@@ -155,40 +155,15 @@ if (isset($_POST['id_cliente'])) {
                     <?php while ($row = $result->fetch_assoc()): ?>
                         <tr>
                             <td>
-                                <input type="checkbox" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>" required>
+                                <input type="checkbox" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>">
                             </td>
-                            <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
-                            <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
+                            <td><?php echo htmlspecialchars($row['modelo']); ?></td>
+                            <td><?php echo htmlspecialchars($row['km_atual']); ?></td>
                         </tr>
                     <?php endwhile; ?>
                 </table>
                 <button type="submit">Informar Km Final</button>
             </form>
-=======
-            <form method="POST" action="informar_km_final.php">
-    <table>
-        <tr>
-            <th>Selecionar</th>
-            <th>Modelo do Veículo</th>
-            <th>Km Inicial</th>
-        </tr>
-        <?php while ($row = $result->fetch_assoc()): ?>
-
-            
-            <tr>
-                <td>
-                    <input type="checkbox" name="aluguel_selecionado" value="<?php echo $row['id_aluguel']; ?>">
-                </td>
-                <td><?php echo htmlspecialchars($row['modelo_veiculo']); ?></td>
-                <td><?php echo htmlspecialchars($row['km_inicial']); ?></td>
-            </tr>
-        <?php endwhile; ?>
-    </table>
-    <button type="submit">Informar Km Final</button>
-</form>
-
-
->>>>>>> Stashed changes
         <?php elseif (isset($result)): ?>
             <p>Nenhum aluguel encontrado para o cliente selecionado.</p>
         <?php endif; ?>
