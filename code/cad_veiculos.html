@@ -224,5 +224,34 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Definindo a validação do formulário
+            $("#cadastroForm").validate({
+                rules: {
+                    placa: {
+                        required: true,
+                        minlength: 7,
+                        maxlength: 7
+                        
+                    },
+                 
+                },
+                messages: {
+                    placa: {
+                        required: "Coloque uma placa valida",
+                        minlength: "Coloque uma placa valida",
+                    },
+                  
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
