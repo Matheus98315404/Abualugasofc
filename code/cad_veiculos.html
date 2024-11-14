@@ -239,12 +239,64 @@
                         maxlength: 7
                         
                     },
+                    modelo: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 100
+                            
+                    },
+
+                    marca: {
+                        required: true,
+                        minlength: 2,
+                        maxlength: 100
+                            
+                    },
+
+                    ano: {
+                        required: true,
+                        minlength: 1900,
+                        maxlength: 2025
+                            
+                    },
+                    cor: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 100
+                            
+                    },
+                    km: {
+                        required: true,
+                        minlength: 1,
+                        maxlength: 100
+                        digits: true,
+                    },
                  
                 },
                 messages: {
                     placa: {
-                        required: "Coloque uma placa valida, min: 7 caracteres",
-                        minlength: "Coloque uma placa valida, min: 7 caracteres",
+                        required: "Coloque uma placa valida, min: 7 caracteres!",
+                        minlength: "Coloque uma placa valida, min: 7 caracteres!",
+                    },
+                    modelo: {
+                        required: "Coloque um modelo valido!",
+                        minlength: "Coloque um modelo valido!",
+                    },
+                    marca: {
+                        required: "Coloque uma marca valida!",
+                        minlength: "Coloque uma marca valida!",
+                    },
+                    ano: {
+                        required: "Coloque um ano valido!",
+                        minlength: "so sera aceito modelos apartir do ano 1900!",
+                    },
+                    cor: {
+                        required: "Coloque uma cor valida!",
+                        minlength: "coloque uma cor valida!",
+                    },
+                    km: {
+                        required: "so e aceita numeros!",
+                       minlength: "coloque a quantidade de km correto!",
                     },
                   
                 }
