@@ -100,7 +100,7 @@
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="form-container col-lg-8 col-md-10 col-sm-12">
             <h2 class="form-heading text-center">Cadastro de Veículo</h2>
-            <form action="cad_veiculos.php" method="post">
+            <form id="cad_veiculos" action="cad_veiculos.php" method="post">
                 <div class="mb-3">
                     <label for="modelo" class="form-label">Modelo:</label>
                     <input type="text" id="modelo" name="modelo" class="form-control" required>
@@ -231,7 +231,7 @@
     <script>
         $(document).ready(function () {
             // Definindo a validação do formulário
-            $("#cadastroForm").validate({
+            $("#cad_veiculos").validate({
                 rules: {
                     placa: {
                         required: true,
@@ -243,8 +243,8 @@
                 },
                 messages: {
                     placa: {
-                        required: "Coloque uma placa valida",
-                        minlength: "Coloque uma placa valida",
+                        required: "Coloque uma placa valida, min: 7 caracteres",
+                        minlength: "Coloque uma placa valida, min: 7 caracteres",
                     },
                   
                 }
